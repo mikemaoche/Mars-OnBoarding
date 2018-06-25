@@ -158,6 +158,9 @@
     <Content Include="scripts\jquery.validate.unobtrusive.js" />
     <Content Include="scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="scripts\modernizr-2.6.2.js" />
+    <Content Include="scripts\React\dist\bundle.js" />
+    <Content Include="scripts\React\Customers.js" />
+    <Content Include="scripts\React\webpack.config.js" />
     <Content Include="Web.config" />
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
@@ -212,6 +215,7 @@
       <DependentUpon>EntityMars.edmx</DependentUpon>
     </Content>
     <Content Include="scripts\jquery-1.10.2.min.map" />
+    <Content Include="scripts\React\package.json" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
