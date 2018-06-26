@@ -1,7 +1,20 @@
 ﻿import React from 'react';
 import ReactDOM from 'react-dom';
-import { Button, Container, Divider, Grid, Header, Image, Menu, Segment } from 'semantic-ui-react';
+import ModalTest from './Component/ModalTest.jsx';
 
+/*const ModalModalExample = () => (
+  <Modal trigger={<Button onClick={this.handleOpen}>Show Modal</Button>}>
+    <Modal.Header>Select a Photo</Modal.Header>
+    <Modal.Content image>
+      <Image wrapped size='medium' src='#' />
+      <Modal.Description>
+        <Header>Default Profile Image</Header>
+        <p>We've found the following gravatar image associated with your e-mail address.</p>
+        <p>Is it okay to use this photo?</p>
+      </Modal.Description>
+    </Modal.Content>
+  </Modal>
+)*/
 
 
 {/* Model class customer */}
@@ -26,7 +39,7 @@ class Customer extends React.Component {
         //ajax call logic
         fetch('/Customers/GetCustomersDetails').then(response => {
             response.json().then(data => {
-                console.log(data);
+                //console.log(data);
                 this.setState({
                     serviceList: data
                 })
@@ -46,7 +59,7 @@ class Customer extends React.Component {
     }
 
     render() {
-        console.log(this.state.serviceList);
+        //console.log(this.state.serviceList);
         
         let serviceList = this.state.serviceList;
 
@@ -68,23 +81,22 @@ class Customer extends React.Component {
         }
     return (
         <React.Fragment>
-            <div>
-                <button id="add">Add new customer</button>
+            <div>                
                 <table className="ui striped table">
                     <thead>
                         <tr>
                             <th className="two wide">Customer name</th>
                             <th className="ten wide">Address</th>
                             <th className="four wide">Action (Edit)</th>
-                            <th className="four wide">Action (Delete)</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-    {tableData}
-                    </tbody>
-                </table>
-            </div>
-        </React.Fragment>
+        <th className="four wide">Action (Delete)</th>
+    </tr>
+</thead>
+<tbody>
+{tableData}
+</tbody>
+</table>
+</div>
+</React.Fragment>
     )
     }
 }
@@ -95,4 +107,4 @@ class Customer extends React.Component {
 
 {/* rendering the component */}
 const app = document.getElementById('app');
-ReactDOM.render(<Customer/>,app);
+ReactDOM.render(<div><ModalTest /><Customer /></div>,app);
