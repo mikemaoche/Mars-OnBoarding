@@ -20,7 +20,8 @@ namespace Mars.Models
         {
             this.ProductSolds = new HashSet<ProductSold>();
         }
-    
+        
+        [Key]
         public int Id { get; set; }
 
         [Required(ErrorMessage = "Provide a product name")]

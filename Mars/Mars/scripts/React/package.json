@@ -1,8 +1,8 @@
 {
   "name": "mars",
   "version": "1.0.0",
-  "description": "react js",
-  "main": "Customers.js",
+  "description": "react jsx",
+  "main": "Customers.jsx",
   "scripts": {
     "webpack": "webpack",
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -12,7 +12,7 @@
   "dependencies": {
     "react": "^16.4.1",
     "react-dom": "^16.4.1",
-    "semantic-ui": "^2.3.2"
+    "semantic-ui-react": "^0.81.1"
   },
   "devDependencies": {
     "babel-core": "^6.26.3",
