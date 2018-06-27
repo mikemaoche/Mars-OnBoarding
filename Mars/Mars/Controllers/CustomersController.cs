@@ -23,8 +23,15 @@ namespace Mars.Controllers
         public JsonResult GetCustomersDetails()
         {
             if (db.Customers != null)
-                return Json(db.Customers.ToList(), JsonRequestBehavior.AllowGet); ;
+                return Json(db.Customers.ToList(), JsonRequestBehavior.AllowGet);
             return Json(db.Customers.ToList(), JsonRequestBehavior.DenyGet);
+        }
+
+        
+        public JsonResult AddOneCustomer(string name, string address)
+        {
+            var query = db.Customers.Add(new Customer() { Name=name, Address=address});
+            return Json(db.Customers.ToList(),JsonRequestBehavior.AllowGet);
         }
 
         [HttpPost]
@@ -34,11 +41,13 @@ namespace Mars.Controllers
             return null;
         }
 
-        [HttpPost]
-        public ActionResult DeleteOneCustomer()
+        
+        public JsonResult DeleteOneCustomer(int customerId)
         {
-            //var query = db.Customers.Where(lambda => lambda.Id == id);
-            return null;
+            var customer = db.Customers.Where(user => user.Id == customerId).Single();
+            db.Customers.Remove(customer);
+            db.SaveChanges();
+            return Json(db.Customers.ToList(), JsonRequestBehavior.AllowGet);
         }
 
     }

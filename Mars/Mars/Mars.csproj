@@ -159,10 +159,12 @@
     <Content Include="scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="scripts\modernizr-2.6.2.js" />
     <Content Include="scripts\React\dist\bundle.js" />
-    <Content Include="scripts\React\Component\ModalTest.jsx" />
+    <Content Include="scripts\React\Component\DeleteModal.jsx" />
     <None Include="scripts\React\Customers.jsx" />
     <Content Include="scripts\React\webpack.config.js" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Customers\Index.cshtml" />

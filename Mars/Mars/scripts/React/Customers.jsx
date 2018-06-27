@@ -1,20 +1,10 @@
 ﻿import React from 'react';
 import ReactDOM from 'react-dom';
-import ModalTest from './Component/ModalTest.jsx';
+import { Button, Modal, Header, Image, Container, Divider, Grid, Menu, Segment, Icon, Popup } from 'semantic-ui-react';
+import DeleteModal from './Component/DeleteModal.jsx';
 
-/*const ModalModalExample = () => (
-  <Modal trigger={<Button onClick={this.handleOpen}>Show Modal</Button>}>
-    <Modal.Header>Select a Photo</Modal.Header>
-    <Modal.Content image>
-      <Image wrapped size='medium' src='#' />
-      <Modal.Description>
-        <Header>Default Profile Image</Header>
-        <p>We've found the following gravatar image associated with your e-mail address.</p>
-        <p>Is it okay to use this photo?</p>
-      </Modal.Description>
-    </Modal.Content>
-  </Modal>
-)*/
+
+
 
 
 {/* Model class customer */}
@@ -22,13 +12,18 @@ class Customer extends React.Component {
     constructor(props){
         super(props);
         this.state = {
-            serviceList: []
+            serviceList: [],
+            name:"",
+            address:""
         };
         
         this.loadData = this.loadData.bind(this);
+        this.add = this.add.bind(this);
         this.update = this.update.bind(this);
         this.delete = this.delete.bind(this);
+        
     }
+
 
     componentDidMount() {
         this.loadData();
@@ -47,6 +42,30 @@ class Customer extends React.Component {
         })
     }
 
+    add() {
+        // ajax call logic
+        console.log("add : " + $("#test").val())
+        
+        /*$.ajax({
+            url: "/Customers/AddOneCustomer",
+            type: "post",
+            data: 
+                {
+                    name:document.getElementById("customerName").innerHTML,
+                    address:document.getElementById("customerAddress").innerHTML
+                },
+            dataType: "json",
+            success: function (response) {                 
+                //console.log(response)
+                window.location.reload(); // refresh the page
+
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+                console.log(textStatus, errorThrown);
+            }
+        });*/
+    }
+
     update(id) {
         //ajax call logic
         console.log("update me")
@@ -55,7 +74,19 @@ class Customer extends React.Component {
 
     delete(id) {
         //ajax call logic
-   
+        $.ajax({
+            url: "/Customers/DeleteOneCustomer?customerId=" + id,
+            type: "post",
+            dataType: "json",
+            success: function (response) {                 
+                //console.log(response)
+                window.location.reload(); // refresh the page
+
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+                console.log(textStatus, errorThrown);
+            }
+        });
     }
 
     render() {
@@ -67,21 +98,38 @@ class Customer extends React.Component {
 
         if (serviceList != "") {
             tableData = serviceList.map(service => 
-                <tr key={service.id}>
+                <tr key={service.Id}>
                     <td className="two wide">{service.Name}</td>
                     <td className="ten wide">{service.Address}</td>
                     <td className="four wide">
-                        <i className="outline write icon" onClick={this.update.bind(this, service.id)}>Edit</i>                        
+                        <i className="outline write icon" onClick={this.update.bind(this, service.Id)}>Edit</i>                        
                     </td>
                     <td className="four wide">
-                        <i className="remove icon" onClick={this.delete.bind(this, service.id)}>Delete</i>
+                        <i className="remove icon" onClick={this.delete.bind(this, service.Id)}>Delete</i>
                     </td>
                 </tr>
            )
         }
     return (
         <React.Fragment>
-            <div>                
+            <div>          
+              <Modal
+                id="modal"
+                trigger={<Button id="buttonModal">Add a new customer</Button>}
+                >
+                <Modal.Header>Add a new customer</Modal.Header>
+                <Modal.Content>   
+                    <form action={this.add()}>                
+                        <label>Name</label><br />
+                        <input id="test" type="text" placeholder="Type a name"  /><br />
+                        <label>Address</label><br />
+                        <input type="text" placeholder="Type an address" /><br />
+                        <input type="submit" value="save" />      
+                    </form>             
+                </Modal.Content>
+
+              </Modal>
+
                 <table className="ui striped table">
                     <thead>
                         <tr>
@@ -89,15 +137,15 @@ class Customer extends React.Component {
                             <th className="ten wide">Address</th>
                             <th className="four wide">Action (Edit)</th>
         <th className="four wide">Action (Delete)</th>
-    </tr>
-</thead>
-<tbody>
-{tableData}
-</tbody>
-</table>
-</div>
-</React.Fragment>
-    )
+            </tr>
+        </thead>
+        <tbody>
+        {tableData}
+        </tbody>
+        </table>
+        </div>
+        </React.Fragment>
+            )
     }
 }
 
@@ -107,4 +155,4 @@ class Customer extends React.Component {
 
 {/* rendering the component */}
 const app = document.getElementById('app');
-ReactDOM.render(<div><ModalTest /><Customer /></div>,app);
+ReactDOM.render(<div><Customer /></div>,app);
