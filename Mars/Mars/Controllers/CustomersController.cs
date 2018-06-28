@@ -6,6 +6,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 
+
 namespace Mars.Controllers
 {
     public class CustomersController : Controller
@@ -28,17 +29,37 @@ namespace Mars.Controllers
         }
 
         
-        public JsonResult AddOneCustomer(string name, string address)
+        public JsonResult PostAddOneCustomer(Customer customer)
         {
-            var query = db.Customers.Add(new Customer() { Name=name, Address=address});
-            return Json(db.Customers.ToList(),JsonRequestBehavior.AllowGet);
+            if (ModelState.IsValid)
+            {
+                var query = db.Customers.Add(new Customer() { Name = customer.Name, Address = customer.Address });
+                db.SaveChanges();
+                return Json(db.Customers.ToList(), JsonRequestBehavior.AllowGet);
+            }
+            return Json(db.Customers.ToList(), JsonRequestBehavior.DenyGet);
         }
 
-        [HttpPost]
-        public ActionResult UpdateOneCustomer()
+        public JsonResult PostUpdateOneCustomer(Customer customer)
         {
-            //var query = db.Customers.Where(lambda => lambda.Id == id);
-            return null;
+            
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    var query = db.Customers.Where(user => user.Id == customer.Id).FirstOrDefault();
+                    query.Name = customer.Name;
+                    query.Address = customer.Address;
+                    db.Entry(customer).State = EntityState.Modified;
+                    db.SaveChanges();
+                    return Json(db.Customers.ToList(), JsonRequestBehavior.AllowGet);
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e);
+                }                
+            }
+            return Json(db.Customers.ToList(), JsonRequestBehavior.DenyGet);
         }
 
         

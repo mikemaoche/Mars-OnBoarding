@@ -11,8 +11,7 @@ namespace Mars.Models
 {
     using System;
     using System.Collections.Generic;
-    using System.ComponentModel.DataAnnotations;
-
+    
     public partial class Store
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -20,16 +19,9 @@ namespace Mars.Models
         {
             this.ProductSolds = new HashSet<ProductSold>();
         }
-
-        [Key]
+    
         public int Id { get; set; }
-
-        [Required(ErrorMessage = "Provide a store name")]
-        [MaxLength(15, ErrorMessage = "{0} is the max characters")]
         public string Name { get; set; }
-
-        [Required(ErrorMessage = "Provide an address")]
-        [StringLength(20, MinimumLength = 3, ErrorMessage = "From 3 to 20 characters only for the address")]
         public string Address { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

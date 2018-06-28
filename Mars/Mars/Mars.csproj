@@ -84,6 +84,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Activities" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Security" />
     <Reference Include="System.Web.DynamicData" />
@@ -159,7 +160,7 @@
     <Content Include="scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="scripts\modernizr-2.6.2.js" />
     <Content Include="scripts\React\dist\bundle.js" />
-    <Content Include="scripts\React\Component\DeleteModal.jsx" />
+    <Content Include="scripts\React\Component\ModalAdding.jsx" />
     <None Include="scripts\React\Customers.jsx" />
     <Content Include="scripts\React\webpack.config.js" />
     <Content Include="Web.config">

@@ -11,8 +11,7 @@ namespace Mars.Models
 {
     using System;
     using System.Collections.Generic;
-    using System.ComponentModel.DataAnnotations;
-
+    
     public partial class Product
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -20,13 +19,9 @@ namespace Mars.Models
         {
             this.ProductSolds = new HashSet<ProductSold>();
         }
-        
-        [Key]
+    
         public int Id { get; set; }
-
-        [Required(ErrorMessage = "Provide a product name")]
         public string Name { get; set; }
-        [Required(ErrorMessage = "Provide a price")]
         public decimal Price { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
