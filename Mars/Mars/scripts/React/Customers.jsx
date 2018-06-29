@@ -82,7 +82,20 @@ class Customer extends React.Component {
         }
         alert(JSON.stringify(dataJSON));
         
-        $.ajax({
+        fetch('/Customers/PostUpdateOneCustomer', {
+            method: 'POST',
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(dataJSON)
+        }).then(response => {
+            response.json().then(data => {
+                console.log(data);
+                window.location.reload();
+            })
+        })
+        /*$.ajax({
             url: "/Customers/PostUpdateOneCustomer",
             type: "POST",
             dataType: "JSON",
@@ -97,7 +110,7 @@ class Customer extends React.Component {
             error: function(jqXHR, textStatus, errorThrown) {
                 alert(textStatus, errorThrown);
             }
-        })
+        })*/
         
     }
 

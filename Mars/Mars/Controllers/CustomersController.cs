@@ -31,7 +31,7 @@ namespace Mars.Controllers
         
         public JsonResult PostAddOneCustomer(Customer customer)
         {
-            if (ModelState.IsValid)
+            if (ModelState.IsValid) // checking the fields are completed
             {
                 var query = db.Customers.Add(new Customer() { Name = customer.Name, Address = customer.Address });
                 db.SaveChanges();
@@ -47,10 +47,9 @@ namespace Mars.Controllers
             {
                 try
                 {
-                    var query = db.Customers.Where(user => user.Id == customer.Id).FirstOrDefault();
-                    query.Name = customer.Name;
-                    query.Address = customer.Address;
-                    db.Entry(customer).State = EntityState.Modified;
+                    var query = db.Customers.Where(user => user.Id == customer.Id).Select(col => new { col.Name , col.Address}).Single();
+                    query = new {customer.Name, customer.Address};
+                    db.Entry(customer).State = EntityState.Modified; // allow to update the entity
                     db.SaveChanges();
                     return Json(db.Customers.ToList(), JsonRequestBehavior.AllowGet);
                 }
