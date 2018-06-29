@@ -228,6 +228,9 @@
     <Content Include="Views\Products\Index.cshtml" />
     <Content Include="Views\Stores\Index.cshtml" />
     <Content Include="Views\Sales\Index.cshtml" />
+    <Content Include="scripts\React\Products.jsx" />
+    <Content Include="scripts\React\Stores.jsx" />
+    <Content Include="scripts\React\Sales.jsx" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
