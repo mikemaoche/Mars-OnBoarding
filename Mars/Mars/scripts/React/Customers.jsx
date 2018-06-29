@@ -1,11 +1,6 @@
 ﻿import React from 'react';
 import ReactDOM from 'react-dom';
-import { Button, Modal, Header, Image, Container, Divider, Grid, Menu, Segment, Icon, Popup } from 'semantic-ui-react';
-//import ModalAdding from './Component/ModalAdding.jsx';
-
-
-
-
+import { Button, Modal, Header, Image, Container, Divider, Grid, Menu, Segment, Icon, Popup , Form, Table, Label } from 'semantic-ui-react';
 
 {/* Model class customer */}
 class Customer extends React.Component {
@@ -95,6 +90,8 @@ class Customer extends React.Component {
                 window.location.reload();
             })
         })
+
+        // ANOTHER WAY
         /*$.ajax({
             url: "/Customers/PostUpdateOneCustomer",
             type: "POST",
@@ -140,58 +137,68 @@ class Customer extends React.Component {
 
         if (serviceList != "") {
             tableData = serviceList.map(service => 
-                <tr key={service.Id}>
-                    <td className="two wide">{service.Name}</td>
-                    <td className="ten wide">{service.Address}</td>
-                    <td className="four wide">
-                      <Modal id="modal" trigger={<i className="outline write icon">Edit</i>}  >
+                <Table.Row key={service.Id}>
+                    <Table.Cell >{service.Name}</Table.Cell>
+                    <Table.Cell >{service.Address}</Table.Cell>
+                    <Table.Cell >
+                      <Modal id="modal" trigger={<Button color="yellow" class="ui basic modal button"><Icon name="edit" />Edit</Button>}  >
                         <Modal.Header >Details customer</Modal.Header>
                             <Modal.Content> 
-                                <form ref="form" method="POST" onSubmit={this.update.bind(this,service.Id)}>        
+                                <Form ref="form" method="POST" onSubmit={this.update.bind(this,service.Id)}>
+                                    <Form.Field>
                                     <label>Name</label><br />
                                     <input type="text" placeholder="Type a name" name="name" placeholder={service.Name} /><br />
-                                    <label>Address</label><br />
-                                    <input placeholder="Type an address" name="address" placeholder={service.Address} /><br />
-                                    <input type="submit" value="save"  />            
-                                </form> 
+                                    </Form.Field>
+                                    <Form.Field>
+                                        <label>Address</label><br />
+                                        <input placeholder="Type an address" name="address" placeholder={service.Address} /><br />
+                                    </Form.Field>
+                                    <button class="ui grey button" type='submit'><Icon name="save" />save</button>
+                                </Form>
                             </Modal.Content>
-                        </Modal>                             
-                    </td>
-                    <td className="four wide">
-                        <i className="remove icon" onClick={this.delete.bind(this, service.Id)}>Delete</i>
-                    </td>
-                </tr>
+                        </Modal>
+                    </Table.Cell>
+                    <Table.Cell>
+                        <Button color="red" class="ui basic modal button" onClick={this.delete.bind(this, service.Id)}><Icon name="trash" />Delete</Button>
+                    </Table.Cell>
+                </Table.Row>
            )
         }
     return (
         <React.Fragment>
-            <div>  
-                <Modal id="modal" trigger={<Button id="buttonModal">Add a new customer</Button>}  >
+            <div>
+                <Modal id="modal" trigger={<Button color="blue" class="ui basic modal button" id="buttonModal">Add a new customer</Button>}  >
                     <Modal.Header >Add a new customer</Modal.Header>
-                    <Modal.Content> 
-                        <form onSubmit={this.add} ref="form" method="POST">        
-                            <label>Name</label><br />
-                            <input type="text" placeholder="Type a name" name="name" /><br />                            
-                            <label>Address</label><br />
-                            <input placeholder="Type an address" name="address" /><br />
-                            <input type="submit" value="save" />            
-                        </form>     
+                    <Modal.Content>
+                        <Form onSubmit={this.add} ref="form" method="POST">
+                            <Form.Field>
+                                <label>Name</label><br />
+                                <input type="text" placeholder="Type a name" name="name" /><br />  
+                            </Form.Field>   
+                            <Form.Field>                         
+                                <label>Address</label><br />
+                                <input placeholder="Type an address" name="address" /><br />
+                            </Form.Field>
+                            <button class="ui grey button" type='submit'><Icon name="save" />save</button>         
+                        </Form>
                     </Modal.Content>
-                </Modal>  
-                <table className="ui striped table">
-                    <thead>
-                        <tr>
-                            <th className="two wide">Customer name</th>
-                            <th className="ten wide">Address</th>
-                            <th className="four wide">Action (Edit)</th>
-                        <th className="four wide">Action (Delete)</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                        {tableData}
-                        </tbody>
-                        </table>
-                        </div>
+                </Modal>
+                      <Table celled>
+                        <Table.Header>
+                          <Table.Row>
+                            <Table.HeaderCell>Customer name</Table.HeaderCell>
+                            <Table.HeaderCell>Address</Table.HeaderCell>
+                            <Table.HeaderCell>Action (Edit)</Table.HeaderCell>
+                            <Table.HeaderCell>Action (Delete)</Table.HeaderCell>
+                          </Table.Row>
+                        </Table.Header>
+                        <Table.Body>
+                            {tableData}
+                        </Table.Body>
+                        <Table.Footer>
+                        </Table.Footer>
+                      </Table>
+                    </div>
                </React.Fragment>      
             )
     }
@@ -203,4 +210,4 @@ class Customer extends React.Component {
 
 {/* rendering the component */}
 const app = document.getElementById('app');
-ReactDOM.render(<div><h1>hello</h1><Customer /></div>,app);
+ReactDOM.render(<div><h1 class="anim">Customer Details</h1><Customer /></div>,app);
