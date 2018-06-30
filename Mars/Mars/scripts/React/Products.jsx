@@ -2,7 +2,7 @@
 import ReactDOM from 'react-dom';
 import { Button, Modal, Header, Image, Container, Divider, Grid, Menu, Segment, Icon, Popup , Form, Table, Label } from 'semantic-ui-react';
 
-{/* Model class customer */}
+{/* Model class product */}
 class Products extends React.Component {
     constructor(props){
         super(props);
@@ -49,7 +49,7 @@ class Products extends React.Component {
         
         console.log(dataJSON)
         
-        fetch('/Customers/PostAddOneCustomer', {
+        fetch('/Products/PostAddOneProduct', {
             method: 'POST',
             headers: {
                 Accept: 'application/json',
@@ -77,7 +77,7 @@ class Products extends React.Component {
         }
         alert(JSON.stringify(dataJSON));
         
-        fetch('/Customers/PostUpdateOneCustomer', {
+        fetch('/Products/PostUpdateOneProduct', {
             method: 'POST',
             headers: {
                 Accept: 'application/json',
@@ -114,7 +114,7 @@ class Products extends React.Component {
     delete(id) {
         //ajax call logic
         $.ajax({
-            url: "/Customers/DeleteOneCustomer?customerId=" + id,
+            url: "/Products/DeleteOneProduct?productId=" + id,
             type: "POST",
             dataType: "JSON",
             success: function (response) {                 
@@ -142,16 +142,16 @@ class Products extends React.Component {
                     <Table.Cell >{service.Price}</Table.Cell>
                     <Table.Cell >
                       <Modal id="modal" trigger={<Button color="yellow" class="ui basic modal button"><Icon name="edit" />Edit</Button>}  >
-                        <Modal.Header >Details customer</Modal.Header>
+                        <Modal.Header >Details product</Modal.Header>
                             <Modal.Content> 
                                 <Form ref="form" method="POST" onSubmit={this.update.bind(this,service.Id)}>
                                     <Form.Field>
                                     <label>Name</label><br />
-                                    <input type="text" placeholder="Type a name" name="name" placeholder={service.Name} /><br />
+                                    <input type="text" placeholder="Type a name for the product" name="name" placeholder={service.Name} /><br />
                                     </Form.Field>
                                     <Form.Field>
-                                        <label>Address</label><br />
-                                        <input placeholder="Type an address" name="address" placeholder={service.Address} /><br />
+                                        <label>Price</label><br />
+                                        <input placeholder="Type a price" name="price" placeholder={service.Price} /><br />
                                     </Form.Field>
                                     <button class="ui grey button" type='submit'><Icon name="save" />save</button>
                                 </Form>
@@ -167,17 +167,17 @@ class Products extends React.Component {
                             return (
                                 <React.Fragment>
                                     <div>
-                                        <Modal id="modal" trigger={<Button color="blue" class="ui basic modal button" id="buttonModal">Add a new customer</Button>}  >
-                                            <Modal.Header >Add a new customer</Modal.Header>
+                                        <Modal id="modal" trigger={<Button color="blue" class="ui basic modal button" id="buttonModal">Add a new price</Button>}  >
+                                            <Modal.Header >Add a new product</Modal.Header>
                                             <Modal.Content>
                                                 <Form onSubmit={this.add} ref="form" method="POST">
                                                     <Form.Field>
                                                         <label>Name</label><br />
-                                                        <input type="text" placeholder="Type a name" name="name" /><br />  
+                                                        <input type="text" placeholder="Type a name for the product" name="name" /><br />  
                                                     </Form.Field>   
                                                     <Form.Field>                         
-                                                        <label>Address</label><br />
-                                                        <input placeholder="Type an address" name="address" /><br />
+                                                        <label>Price</label><br />
+                                                        <input placeholder="Type an price" name="price" /><br />
                                                     </Form.Field>
                                                     <button class="ui grey button" type='submit'><Icon name="save" />save</button>         
                                                 </Form>

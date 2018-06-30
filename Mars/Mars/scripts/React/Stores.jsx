@@ -2,7 +2,7 @@
 import ReactDOM from 'react-dom';
 import { Button, Modal, Header, Image, Container, Divider, Grid, Menu, Segment, Icon, Popup , Form, Table, Label } from 'semantic-ui-react';
 
-{/* Model class customer */}
+{/* Model class store */}
 class Stores extends React.Component {
     constructor(props){
         super(props);
@@ -25,7 +25,7 @@ class Stores extends React.Component {
     loadData() {
         
         //ajax call logic
-        fetch('/Products/GetProductsDetails').then(response => {
+        fetch('/Stores/GetStoresDetails').then(response => {
             response.json().then(data => {
                 //console.log(data);
                 this.setState({
@@ -49,7 +49,7 @@ class Stores extends React.Component {
         
         console.log(dataJSON)
         
-        fetch('/Customers/PostAddOneCustomer', {
+        fetch('/Stores/PostAddOneStore', {
             method: 'POST',
             headers: {
                 Accept: 'application/json',
@@ -77,7 +77,7 @@ class Stores extends React.Component {
         }
         alert(JSON.stringify(dataJSON));
         
-        fetch('/Customers/PostUpdateOneCustomer', {
+        fetch('/Stores/PostUpdateOneStore', {
             method: 'POST',
             headers: {
                 Accept: 'application/json',
@@ -114,7 +114,7 @@ class Stores extends React.Component {
     delete(id) {
         //ajax call logic
         $.ajax({
-            url: "/Customers/DeleteOneCustomer?customerId=" + id,
+            url: "/Stores/DeleteOneStore?storeId=" + id,
             type: "POST",
             dataType: "JSON",
             success: function (response) {                 
@@ -139,19 +139,19 @@ class Stores extends React.Component {
             tableData = serviceList.map(service => 
                 <Table.Row key={service.Id}>
                     <Table.Cell >{service.Name}</Table.Cell>
-                    <Table.Cell >{service.Price}</Table.Cell>
+                    <Table.Cell >{service.Address}</Table.Cell>
                     <Table.Cell >
                       <Modal id="modal" trigger={<Button color="yellow" class="ui basic modal button"><Icon name="edit" />Edit</Button>}  >
-                        <Modal.Header >Details customer</Modal.Header>
+                        <Modal.Header >Details store</Modal.Header>
                             <Modal.Content> 
                                 <Form ref="form" method="POST" onSubmit={this.update.bind(this,service.Id)}>
                                     <Form.Field>
                                     <label>Name</label><br />
-                                    <input type="text" placeholder="Type a name" name="name" placeholder={service.Name} /><br />
+                                    <input type="text" placeholder="Type a name for the store" name="name" placeholder={service.Name} /><br />
                                     </Form.Field>
                                     <Form.Field>
                                         <label>Address</label><br />
-                                        <input placeholder="Type an address" name="address" placeholder={service.Price} /><br />
+                                        <input placeholder="Type an address" name="address" placeholder={service.Address} /><br />
                                     </Form.Field>
                                     <button class="ui grey button" type='submit'><Icon name="save" />save</button>
                                 </Form>
@@ -167,16 +167,16 @@ class Stores extends React.Component {
                             return (
                                 <React.Fragment>
                                     <div>
-                                        <Modal id="modal" trigger={<Button color="blue" class="ui basic modal button" id="buttonModal">Add a new customer</Button>}  >
-                                            <Modal.Header >Add a new customer</Modal.Header>
+                                        <Modal id="modal" trigger={<Button color="blue" class="ui basic modal button" id="buttonModal">Add a new store</Button>}  >
+                                            <Modal.Header >Add a new store</Modal.Header>
                                             <Modal.Content>
                                                 <Form onSubmit={this.add} ref="form" method="POST">
                                                     <Form.Field>
                                                         <label>Name</label><br />
-                                                        <input type="text" placeholder="Type a name" name="name" /><br />  
+                                                        <input type="text" placeholder="Type a name for the store" name="name" /><br />  
                                                     </Form.Field>   
                                                     <Form.Field>                         
-                                                        <label>Price</label><br />
+                                                        <label>Address</label><br />
                                                         <input placeholder="Type an address" name="address" /><br />
                                                     </Form.Field>
                                                     <button class="ui grey button" type='submit'><Icon name="save" />save</button>         
@@ -186,8 +186,8 @@ class Stores extends React.Component {
                                               <Table celled>
                                                 <Table.Header>
                                                   <Table.Row>
-                                                    <Table.HeaderCell>Product name</Table.HeaderCell>
-                                                    <Table.HeaderCell>Price</Table.HeaderCell>
+                                                    <Table.HeaderCell>Store name</Table.HeaderCell>
+                                                    <Table.HeaderCell>Address</Table.HeaderCell>
                                                     <Table.HeaderCell>Action (Edit)</Table.HeaderCell>
                                                     <Table.HeaderCell>Action (Delete)</Table.HeaderCell>
                                                   </Table.Row>
