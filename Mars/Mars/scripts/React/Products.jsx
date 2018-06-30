@@ -25,7 +25,7 @@ class Products extends React.Component {
     loadData() {
         
         //ajax call logic
-        fetch('/Customers/GetCustomersDetails').then(response => {
+        fetch('/Products/GetProductsDetails').then(response => {
             response.json().then(data => {
                 //console.log(data);
                 this.setState({
@@ -139,7 +139,7 @@ class Products extends React.Component {
             tableData = serviceList.map(service => 
                 <Table.Row key={service.Id}>
                     <Table.Cell >{service.Name}</Table.Cell>
-                    <Table.Cell >{service.Address}</Table.Cell>
+                    <Table.Cell >{service.Price}</Table.Cell>
                     <Table.Cell >
                       <Modal id="modal" trigger={<Button color="yellow" class="ui basic modal button"><Icon name="edit" />Edit</Button>}  >
                         <Modal.Header >Details customer</Modal.Header>
@@ -209,5 +209,5 @@ class Products extends React.Component {
 
 
 {/* rendering the component */}
-const app = document.getElementById('app');
+const app = document.getElementById('products');
 ReactDOM.render(<div><h1 class="anim">Products Details</h1><Products /></div>,app);

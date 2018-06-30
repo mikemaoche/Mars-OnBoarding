@@ -209,5 +209,5 @@ class Customer extends React.Component {
 
 
 {/* rendering the component */}
-const app = document.getElementById('app');
+const app = document.getElementById('customers');
 ReactDOM.render(<div><h1 class="anim">Customer Details</h1><Customer /></div>,app);

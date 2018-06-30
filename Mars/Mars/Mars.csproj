@@ -159,9 +159,12 @@
     <Content Include="scripts\jquery.validate.unobtrusive.js" />
     <Content Include="scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="scripts\modernizr-2.6.2.js" />
-    <Content Include="scripts\React\dist\bundle.js" />
     <Content Include="scripts\React\Component\ModalAdding.jsx" />
     <None Include="scripts\React\Customers.jsx" />
+    <Content Include="scripts\React\dist\customers.js" />
+    <Content Include="scripts\React\dist\produtcs.js" />
+    <Content Include="scripts\React\dist\sales.js" />
+    <Content Include="scripts\React\dist\stores.js" />
     <Content Include="scripts\React\webpack.config.js" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
