@@ -1,6 +1,6 @@
 ﻿import React from 'react';
 import ReactDOM from 'react-dom';
-import { Button, Modal, Header, Image, Container, Divider, Grid, Menu, Segment, Icon, Popup , Form, Table, Label } from 'semantic-ui-react';
+import { Button, Modal, Header, Image, Container, Divider, Grid, Menu, Segment, Icon, Popup , Form, Table, Label, Dropdown } from 'semantic-ui-react';
 
 {/* Model class customer */}
 class Sales extends React.Component {
@@ -25,9 +25,9 @@ class Sales extends React.Component {
     loadData() {
         
         //ajax call logic
-        fetch('/Products/GetProductsDetails').then(response => {
+        fetch('/Sales/GetSalesDetails').then(response => {
             response.json().then(data => {
-                //console.log(data);
+                console.log(data);
                 this.setState({
                     serviceList: data
                 })
@@ -49,7 +49,7 @@ class Sales extends React.Component {
         
         console.log(dataJSON)
         
-        fetch('/Customers/PostAddOneCustomer', {
+        fetch('/Sales/PostAddOneSale', {
             method: 'POST',
             headers: {
                 Accept: 'application/json',
@@ -77,7 +77,7 @@ class Sales extends React.Component {
         }
         alert(JSON.stringify(dataJSON));
         
-        fetch('/Customers/PostUpdateOneCustomer', {
+        fetch('/Sales/PostUpdateOneSale', {
             method: 'POST',
             headers: {
                 Accept: 'application/json',
@@ -114,7 +114,7 @@ class Sales extends React.Component {
     delete(id) {
         //ajax call logic
         $.ajax({
-            url: "/Customers/DeleteOneCustomer?customerId=" + id,
+            url: "/Sales/DeleteOneSale?saleId=" + id,
             type: "POST",
             dataType: "JSON",
             success: function (response) {                 
@@ -137,21 +137,31 @@ class Sales extends React.Component {
 
         if (serviceList != "") {
             tableData = serviceList.map(service => 
-                <Table.Row key={service.Id}>
-                    <Table.Cell >{service.Name}</Table.Cell>
-                    <Table.Cell >{service.Price}</Table.Cell>
+                <Table.Row key={"hi"}>
+                    <Table.Cell >{"hi"}</Table.Cell>
+                    <Table.Cell >{"hi"}</Table.Cell>
+                    <Table.Cell >{"hi"}</Table.Cell>
+                    <Table.Cell >{"hi"}</Table.Cell>
                     <Table.Cell >
                       <Modal id="modal" trigger={<Button color="yellow" class="ui basic modal button"><Icon name="edit" />Edit</Button>}  >
-                        <Modal.Header >Details customer</Modal.Header>
+                        <Modal.Header >Details sale</Modal.Header>
                             <Modal.Content> 
                                 <Form ref="form" method="POST" onSubmit={this.update.bind(this,service.Id)}>
                                     <Form.Field>
-                                    <label>Name</label><br />
-                                    <input type="text" placeholder="Type a name" name="name" placeholder={service.Name} /><br />
+                                        <label>Select customer</label><br />
+                                        <Dropdown placeholder='Select Customer' fluid search selection options={"hi"} /><br />
                                     </Form.Field>
                                     <Form.Field>
-                                        <label>Address</label><br />
-                                        <input placeholder="Type an address" name="address" placeholder={service.Address} /><br />
+                                        <label>Product name</label><br />
+                                        <Dropdown placeholder='Select Product' fluid search selection options={"hi"} /><br />
+                                    </Form.Field>
+                                    <Form.Field>
+                                        <label>Store name</label><br />
+                                       <Dropdown placeholder='Select Store' fluid search selection options={"hi"} /><br />
+                                    </Form.Field>
+                                    <Form.Field>
+                                        <label>Date</label><br />
+                                        <input type="date" name="date" /><br />
                                     </Form.Field>
                                     <button class="ui grey button" type='submit'><Icon name="save" />save</button>
                                 </Form>
@@ -167,17 +177,25 @@ class Sales extends React.Component {
                             return (
                                 <React.Fragment>
                                     <div>
-                                        <Modal id="modal" trigger={<Button color="blue" class="ui basic modal button" id="buttonModal">Add a new customer</Button>}  >
-                                            <Modal.Header >Add a new customer</Modal.Header>
+                                        <Modal id="modal" trigger={<Button color="blue" class="ui basic modal button" id="buttonModal">Add a new sale record</Button>}  >
+                                            <Modal.Header >Add a new sale</Modal.Header>
                                             <Modal.Content>
                                                 <Form onSubmit={this.add} ref="form" method="POST">
                                                     <Form.Field>
-                                                        <label>Name</label><br />
-                                                        <input type="text" placeholder="Type a name" name="name" /><br />  
-                                                    </Form.Field>   
-                                                    <Form.Field>                         
-                                                        <label>Address</label><br />
-                                                        <input placeholder="Type an address" name="address" /><br />
+                                                        <label>Select customer</label><br />
+                                                        <Dropdown placeholder='Select Customer' fluid search selection options={"hi"} /><br />
+                                                    </Form.Field>
+                                                    <Form.Field>
+                                                        <label>Product name</label><br />
+                                                        <Dropdown placeholder='Select Product' fluid search selection options={"hi"} /><br />
+                                                    </Form.Field>
+                                                    <Form.Field>
+                                                        <label>Store name</label><br />
+                                                        <Dropdown placeholder='Select Store' fluid search selection options={"hi"} /><br />
+                                                    </Form.Field>
+                                                    <Form.Field>
+                                                        <label>Date</label><br />
+                                                        <input type="date" name="date" /><br />
                                                     </Form.Field>
                                                     <button class="ui grey button" type='submit'><Icon name="save" />save</button>         
                                                 </Form>
@@ -187,7 +205,9 @@ class Sales extends React.Component {
                                                 <Table.Header>
                                                   <Table.Row>
                                                     <Table.HeaderCell>Customer name</Table.HeaderCell>
-                                                    <Table.HeaderCell>Address</Table.HeaderCell>
+                                                    <Table.HeaderCell>Product name</Table.HeaderCell>
+                                                    <Table.HeaderCell>Store name</Table.HeaderCell>
+                                                    <Table.HeaderCell>Date sold</Table.HeaderCell>
                                                     <Table.HeaderCell>Action (Edit)</Table.HeaderCell>
                                                     <Table.HeaderCell>Action (Delete)</Table.HeaderCell>
                                                   </Table.Row>

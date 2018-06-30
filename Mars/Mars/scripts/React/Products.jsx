@@ -147,11 +147,11 @@ class Products extends React.Component {
                                 <Form ref="form" method="POST" onSubmit={this.update.bind(this,service.Id)}>
                                     <Form.Field>
                                     <label>Name</label><br />
-                                    <input type="text" placeholder="Type a name for the product" name="name" placeholder={service.Name} /><br />
+                                    <input type="text" name="name" placeholder={service.Name} /><br />
                                     </Form.Field>
                                     <Form.Field>
                                         <label>Price</label><br />
-                                        <input placeholder="Type a price" name="price" placeholder={service.Price} /><br />
+                                        <input name="price" placeholder={service.Price} /><br />
                                     </Form.Field>
                                     <button class="ui grey button" type='submit'><Icon name="save" />save</button>
                                 </Form>
@@ -186,7 +186,7 @@ class Products extends React.Component {
                                               <Table celled>
                                                 <Table.Header>
                                                   <Table.Row>
-                                                    <Table.HeaderCell>Customer name</Table.HeaderCell>
+                                                    <Table.HeaderCell>Product name</Table.HeaderCell>
                                                     <Table.HeaderCell>Address</Table.HeaderCell>
                                                     <Table.HeaderCell>Action (Edit)</Table.HeaderCell>
                                                     <Table.HeaderCell>Action (Delete)</Table.HeaderCell>

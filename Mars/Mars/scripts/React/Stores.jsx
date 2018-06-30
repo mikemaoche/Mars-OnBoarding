@@ -147,11 +147,11 @@ class Stores extends React.Component {
                                 <Form ref="form" method="POST" onSubmit={this.update.bind(this,service.Id)}>
                                     <Form.Field>
                                     <label>Name</label><br />
-                                    <input type="text" placeholder="Type a name for the store" name="name" placeholder={service.Name} /><br />
+                                    <input type="text" name="name" placeholder={service.Name} /><br />
                                     </Form.Field>
                                     <Form.Field>
                                         <label>Address</label><br />
-                                        <input placeholder="Type an address" name="address" placeholder={service.Address} /><br />
+                                        <input name="address" placeholder={service.Address} /><br />
                                     </Form.Field>
                                     <button class="ui grey button" type='submit'><Icon name="save" />save</button>
                                 </Form>
