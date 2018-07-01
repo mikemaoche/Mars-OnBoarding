@@ -21,8 +21,25 @@ namespace Mars.Controllers
         public JsonResult GetSalesDetails()
         {
             if (db.ProductSolds != null)
-                return Json(db.ProductSolds.ToList(), JsonRequestBehavior.AllowGet);
+            {
+                var customers = db.Customers.Select(c => new { c.Id, c.Name }).ToList();
+                var products = db.Products.Select(p => new { p.Id, p.Name }).ToList();
+                var stores = db.Stores.Select(s => new { s.Id, s.Name }).ToList();
+                List<Object> array = new List<Object>(){ customers, products, stores };
+                return Json(array, JsonRequestBehavior.AllowGet);
+            }                
             return Json("NOT FOUND DATA", JsonRequestBehavior.DenyGet);
+        }
+
+        public JsonResult PostAddOneSale(ProductSold prodsold)
+        {
+            if (ModelState.IsValid) // checking the fields are completed
+            {
+                //var query = db.ProductSolds.Add(new ProductSold() {  = prodsold.Name, Address = prodsold.Address });
+                db.SaveChanges();
+                return Json(db.ProductSolds.ToList(), JsonRequestBehavior.AllowGet);
+            }
+            return Json(db.ProductSolds.ToList(), JsonRequestBehavior.DenyGet);
         }
     }
 }

@@ -90,24 +90,6 @@ class Products extends React.Component {
                 window.location.reload();
             })
         })
-
-        // ANOTHER WAY
-        /*$.ajax({
-            url: "/Customers/PostUpdateOneCustomer",
-            type: "POST",
-            dataType: "JSON",
-            data: JSON.stringify(dataJSON),
-            success: function (response) {   
-                alert('updated')
-                $.each( response, function( index, value ){
-                    console.log(value);
-                })             
-                window.location.reload(); // refresh the page
-            },
-            error: function(jqXHR, textStatus, errorThrown) {
-                alert(textStatus, errorThrown);
-            }
-        })*/
         
     }
 
