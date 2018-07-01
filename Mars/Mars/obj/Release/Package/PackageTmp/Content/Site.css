@@ -1,0 +1,45 @@
+﻿body {
+    padding-top: 50px !important;
+    padding-bottom: 20px;
+}
+
+/* Set padding to keep content from hitting the edges */
+.body-content {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+/* Set width on the form input elements since they're 100% wide by default */
+input,
+select,
+textarea {
+    max-width: 280px;
+}
+
+#modal{
+   background:rgba(0, 148, 255,1);
+   width:50%;
+   height:40%;
+   top:20%;
+   right:20%;
+   left:20%;
+   bottom:20%;
+   
+}
+
+.anim {
+    width: 100%;
+    color:darkgray;
+    background-color: mintcream;
+    animation-name: colorful;
+    animation-duration: 4s;
+    animation-iteration-count: infinite;
+    padding:.5em;
+    display:block;
+    margin:1em !important;
+}
+
+@keyframes colorful {
+    from {background-color: floralwhite;  }
+    to {background-color: lavenderblush;  }
+}
