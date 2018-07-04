@@ -110,3 +110,4 @@ C:\Users\worker session\Source\Repos\OnBoardingOfficial\Mars\Mars\bin\Microsoft.
 C:\Users\worker session\Source\Repos\OnBoardingOfficial\Mars\Mars\bin\Microsoft.Owin.Host.SystemWeb.xml
 C:\Users\worker session\Source\Repos\OnBoardingOfficial\Mars\Mars\bin\Microsoft.Owin.Security.xml
 C:\Users\worker session\Source\Repos\OnBoardingOfficial\Mars\Mars\bin\Newtonsoft.Json.xml
+C:\Users\worker session\Source\Repos\OnBoardingOfficial\Mars\Mars\obj\Debug\Mars.csprojResolveAssemblyReference.cache

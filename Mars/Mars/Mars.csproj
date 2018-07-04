@@ -193,10 +193,10 @@
     <Content Include="scripts\modernizr-2.6.2.js" />
     <Content Include="scripts\React\Component\ModalAdding.jsx" />
     <None Include="scripts\React\Customers.jsx" />
-    <Content Include="scripts\React\dist\customers.js" />
-    <Content Include="scripts\React\dist\produtcs.js" />
-    <Content Include="scripts\React\dist\sales.js" />
-    <Content Include="scripts\React\dist\stores.js" />
+    <Content Include="scripts\React\dist\customers.bundle.js" />
+    <Content Include="scripts\React\dist\produtcs.bundle.js" />
+    <Content Include="scripts\React\dist\sales.bundle.js" />
+    <Content Include="scripts\React\dist\stores.bundle.js" />
     <Content Include="scripts\React\webpack.config.js" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>

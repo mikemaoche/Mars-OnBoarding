@@ -35,9 +35,10 @@ namespace Mars.Controllers
         {
             if (ModelState.IsValid) // checking the fields are completed
             {
-                //var query = db.ProductSolds.Add(new ProductSold() {  = prodsold.Name, Address = prodsold.Address });
-                db.SaveChanges();
-                return Json(db.ProductSolds.ToList(), JsonRequestBehavior.AllowGet);
+                /*var idcustomer = db.Customers.Where()
+                var query = db.ProductSolds.Add(new ProductSold() { CustomerId = prodsold.Name, Address = prodsold.Address });
+                db.SaveChanges();*/
+                return Json(prodsold, JsonRequestBehavior.AllowGet);
             }
             return Json(db.ProductSolds.ToList(), JsonRequestBehavior.DenyGet);
         }

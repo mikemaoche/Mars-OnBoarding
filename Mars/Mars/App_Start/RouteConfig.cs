@@ -17,7 +17,7 @@ namespace Mars
                 name: "Default",
                 url: "{controller}/{action}/{id}",
                 defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional },
-                namespaces: new[] { "Mars.Controllers" }
+                namespaces: new[] { "Mars.Controllers" } // to fix the error: multiple controllers calls
             );
         }
     }

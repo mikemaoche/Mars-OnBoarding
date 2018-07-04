@@ -123,25 +123,25 @@ class Products extends React.Component {
                     <Table.Cell >{service.Name}</Table.Cell>
                     <Table.Cell >{service.Price}</Table.Cell>
                     <Table.Cell >
-                      <Modal id="modal" trigger={<Button color="yellow" class="ui basic modal button"><Icon name="edit" />Edit</Button>}  >
+                      <Modal id="modal" trigger={<Button color="yellow"><Icon name="edit" />Edit</Button>}  >
                         <Modal.Header >Details product</Modal.Header>
                             <Modal.Content> 
                                 <Form ref="form" method="POST" onSubmit={this.update.bind(this,service.Id)}>
                                     <Form.Field>
                                     <label>Name</label><br />
-                                    <input type="text" name="name" placeholder={service.Name} /><br />
+                                    <input type="text" name="name" placeholder={service.Name} required /><br />
                                     </Form.Field>
                                     <Form.Field>
                                         <label>Price</label><br />
-                                        <input name="price" placeholder={service.Price} /><br />
+                                        <input name="price" placeholder={service.Price} required /><br />
                                     </Form.Field>
-                                    <button class="ui grey button" type='submit'><Icon name="save" />save</button>
+                                    <Button type='submit'><Icon name="save" />save</Button>
                                 </Form>
                             </Modal.Content>
                         </Modal>
                     </Table.Cell>
                     <Table.Cell>
-                        <Button color="red" class="ui basic modal button" onClick={this.delete.bind(this, service.Id)}><Icon name="trash" />Delete</Button>
+                        <Button color="red" onClick={this.delete.bind(this, service.Id)}><Icon name="trash" />Delete</Button>
                     </Table.Cell>
                 </Table.Row>
            )
@@ -149,19 +149,19 @@ class Products extends React.Component {
                             return (
                                 <React.Fragment>
                                     <div>
-                                        <Modal id="modal" trigger={<Button color="blue" class="ui basic modal button" id="buttonModal">Add a new price</Button>}  >
+                                        <Modal id="modal" trigger={<Button color="blue" id="buttonModal">Add a new price</Button>}  >
                                             <Modal.Header >Add a new product</Modal.Header>
                                             <Modal.Content>
                                                 <Form onSubmit={this.add} ref="form" method="POST">
                                                     <Form.Field>
                                                         <label>Name</label><br />
-                                                        <input type="text" placeholder="Type a name for the product" name="name" /><br />  
+                                                        <input type="text" placeholder="Type a name for the product" name="name" required /><br />  
                                                     </Form.Field>   
                                                     <Form.Field>                         
                                                         <label>Price</label><br />
                                                         <input placeholder="Type an price" name="price" /><br />
                                                     </Form.Field>
-                                                    <button class="ui grey button" type='submit'><Icon name="save" />save</button>         
+                                                    <Button type='submit'><Icon name="save" required />save</Button>         
                                                 </Form>
                                             </Modal.Content>
                                         </Modal>
@@ -192,4 +192,4 @@ class Products extends React.Component {
 
 {/* rendering the component */}
 const app = document.getElementById('products');
-ReactDOM.render(<div><h1 class="anim">Products Details</h1><Products /></div>,app);
+ReactDOM.render(<div><h1 className="anim">Products Details</h1><Products /></div>,app);
