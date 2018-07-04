@@ -15,7 +15,7 @@ class Sales extends React.Component {
         this.add = this.add.bind(this);
         this.update = this.update.bind(this);
         this.delete = this.delete.bind(this);
-        this.onHandle=this.onHandle.bind(this);
+        this.onHandle=this.handleChange.bind(this);
     }
 
 
@@ -113,8 +113,9 @@ class Sales extends React.Component {
         });
     }
 
-    onHandle(e){
-        this.setState({values: e.currentTarget.textContent})    
+    handleChange(name, {value}) 
+    {
+        this.setState({ values : [name,value] })
     }
 
     render() {        
@@ -123,7 +124,8 @@ class Sales extends React.Component {
             let tableData = null;
             let test = null;
 
-            if (serviceList != "") {               
+            if (serviceList != "") {      
+                const { value } = this.state
                 // dropdown customers
                 let options_customers = [];
                 serviceList[0].map((service, i) =>
@@ -138,22 +140,22 @@ class Sales extends React.Component {
                 let options_stores = [];
                 serviceList[2].map((service, i) =>
                     options_stores.push({ key: service.Id , text: service.Name, value: service.Name }))
-            
+                
                 test = <Modal id="modal" trigger={<Button color="blue" id="buttonModal">Add a new sale record</Button>}  >
                                                 <Modal.Header >Add a new sale</Modal.Header>
                                                 <Modal.Content>
                                                     <Form onSubmit={this.add} ref="form" method="POST">
                                                         <Form.Field>
                                                             <label>Select customer</label><br />
-                                                            <Dropdown placeholder='Select Customer' fluid selection options={options_customers} onChange={this.onHandle.bind(this)} /><br />
+                                                            <Dropdown placeholder='Select Customer' fluid selection options={options_customers} onChange={this.handleChange.bind(this,'customerSelected')} value={value} /><br />
                                                     </Form.Field>
                                                     <Form.Field>
                                                         <label>Product name</label><br />
-                                                        <Dropdown placeholder='Select Product' fluid search selection options={options_products} onChange={this.onHandle.bind(this)} /><br />
+                                                        <Dropdown placeholder='Select Product' fluid search selection options={options_products} onChange={this.handleChange.bind(this,'productSelected')} value={value} /><br />
                                                     </Form.Field>
                                                     <Form.Field>
                                                         <label>Store name</label><br />
-                                                        <Dropdown placeholder='Select Store' fluid search selection options={options_stores} onChange={this.onHandle.bind(this)} /><br />
+                                                        <Dropdown placeholder='Select Store' fluid search selection options={options_stores} onChange={this.handleChange.bind(this,'storeSelected')} value={value} /><br />
                                                     </Form.Field>
                                                     <Form.Field>
                                                         <label>Date</label><br />
@@ -165,7 +167,7 @@ class Sales extends React.Component {
                                         </Modal>
 
                 tableData = serviceList.map(service => 
-                    <Table.Row key={""}>
+                    <Table.Row key={service[0].Id}>
                         <Table.Cell >{""}</Table.Cell>
                         <Table.Cell >{""}</Table.Cell>
                         <Table.Cell >{""}</Table.Cell>
@@ -205,7 +207,8 @@ class Sales extends React.Component {
                         return (
                             <React.Fragment>
                                 <div>  
-                                                    {test}                                      
+                                    {console.log(this.state)}
+                                    {test}                                      
                                     <Table celled>
                                     <Table.Header>
                                         <Table.Row>
