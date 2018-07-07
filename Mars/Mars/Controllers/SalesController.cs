@@ -31,14 +31,39 @@ namespace Mars.Controllers
             return Json("NOT FOUND DATA", JsonRequestBehavior.DenyGet);
         }
 
+        /// <summary>
+        /// fetch all the Id by using join
+        /// </summary>
+        /// <param name="prodsold">s represents sale</param>
+        /// <param name="store">sto represents store</param>
+        /// <returns></returns>
         public JsonResult PostAddOneSale(ProductSold prodsold)
         {
             if (ModelState.IsValid) // checking the fields are completed
             {
-                /*var idcustomer = db.Customers.Where()
-                var query = db.ProductSolds.Add(new ProductSold() { CustomerId = prodsold.Name, Address = prodsold.Address });
-                db.SaveChanges();*/
-                return Json(prodsold, JsonRequestBehavior.AllowGet);
+                var idcustomer = from c in db.Customers
+                                 join s in db.ProductSolds on c.Id equals s.CustomerId
+                                 where c.Id == s.CustomerId select c;
+                var idproduct = from p in db.Products
+                                 join s in db.ProductSolds on p.Id equals s.ProductId
+                                 where p.Id == s.ProductId
+                                 select p;
+                var idstore = from sto in db.Stores
+                                 join s in db.ProductSolds on sto.Id equals s.StoreId
+                                 where sto.Id == s.StoreId
+                                 select sto;
+                if (true)
+                {
+                    var query = db.ProductSolds.Add(new ProductSold() {
+                        CustomerId = ,
+                        ProductId = prodsold.Address,
+                        StoreId =,
+                        DateSold = new DateTime(prodsold.DateSold),
+                    });
+                    db.SaveChanges();
+                    return Json(prodsold, JsonRequestBehavior.AllowGet);
+                }       
+                
             }
             return Json(db.ProductSolds.ToList(), JsonRequestBehavior.DenyGet);
         }
