@@ -169,7 +169,7 @@ class Products extends React.Component {
                                                 <Table.Header>
                                                   <Table.Row>
                                                     <Table.HeaderCell>Product name</Table.HeaderCell>
-                                                    <Table.HeaderCell>Address</Table.HeaderCell>
+                                                    <Table.HeaderCell>Price</Table.HeaderCell>
                                                     <Table.HeaderCell>Action (Edit)</Table.HeaderCell>
                                                     <Table.HeaderCell>Action (Delete)</Table.HeaderCell>
                                                   </Table.Row>

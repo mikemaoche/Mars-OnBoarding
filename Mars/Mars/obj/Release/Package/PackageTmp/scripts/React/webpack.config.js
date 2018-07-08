@@ -1,5 +1,5 @@
 ﻿module.exports = {
-    mode: 'production',
+    mode: 'development',
     context: __dirname,
     entry: { 
         customers: "./Customers.jsx",
@@ -9,12 +9,12 @@
     },
     output: {
         path: __dirname + "/dist",
-        filename: "[name].js"
+        filename: "[name].bundle.js"
     },
     watch: true,
     module: {
         rules: [{
-            test: /\.(js|jsx)$/,
+            test: /\.jsx?$/,
             exclude: /(node_modules)/,
             use: {
                 loader: 'babel-loader',

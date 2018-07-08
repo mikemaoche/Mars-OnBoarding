@@ -9,6 +9,7 @@
 
 namespace Mars.Models
 {
+    using Newtonsoft.Json;
     using System;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
@@ -21,9 +22,12 @@ namespace Mars.Models
         public int CustomerId { get; set; }
         public int StoreId { get; set; }
         public System.DateTime DateSold { get; set; }
-    
+        
+        [JsonIgnore]
         public virtual Customer Customer { get; set; }
+        [JsonIgnore]
         public virtual Product Product { get; set; }
+        [JsonIgnore]
         public virtual Store Store { get; set; }
     }
 }
