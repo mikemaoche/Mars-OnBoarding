@@ -14,7 +14,7 @@ class Stores extends React.Component {
         this.add = this.add.bind(this);
         this.update = this.update.bind(this);
         this.delete = this.delete.bind(this);
-        
+        this.handleChange = this.handleChange.bind(this);   
     }
 
 
@@ -66,30 +66,34 @@ class Stores extends React.Component {
         // this.refs.form.reset();
     }
 
+        
+    handleChange(e){
+        this.setState({
+            [e.target.name]: e.target.value
+        })
+    }
+
     update(id) {
         //ajax call logic
-        const formData = new FormData(event.target)
-        let convertID = JSON.stringify(id)
-        let dataJSON = {Id : convertID}
-        event.preventDefault()
-        for (let entry of formData.entries()) {
-            dataJSON[entry[0]] = entry[1]
+        var data= {
+            name: this.state.name,
+            address : this.state.address,
+            id : id
         }
-        alert(JSON.stringify(dataJSON));
-        
-        fetch('/Stores/PostUpdateOneStore', {
-            method: 'POST',
-            headers: {
-                Accept: 'application/json',
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(dataJSON)
-        }).then(response => {
-            response.json().then(data => {
-                console.log(data);
-                window.location.reload();
+
+        $.ajax({
+            url: '/Products/PostUpdateOneProduct',
+            dataType: 'json',
+            type: 'post',
+            contentType: 'application/json',
+            data: JSON.stringify(data)
+        }).done((data) => {
+            console.log(data);
+            this.setState({
+                serviceList: data
             })
-        })
+            
+        });
         
     }
 
@@ -129,11 +133,11 @@ class Stores extends React.Component {
                                 <Form ref="form" method="POST" onSubmit={this.update.bind(this,service.Id)}>
                                     <Form.Field>
                                     <label>Name</label><br />
-                                    <input type="text" name="name" placeholder={service.Name} required /><br />
+                                    <input type="text" name="name" placeholder={service.Name} onChange={this.handleChange} required /><br />
                                     </Form.Field>
                                     <Form.Field>
                                         <label>Address</label><br />
-                                        <input name="address" placeholder={service.Address} required /><br />
+                                        <input name="address" placeholder={service.Address} onChange={this.handleChange} required /><br />
                                     </Form.Field>
                                     <Button type='submit'><Icon name="save" />save</Button>
                                 </Form>

@@ -1,6 +1,7 @@
 ﻿import React from 'react';
 import ReactDOM from 'react-dom';
 import { Button, Modal, Header, Image, Container, Divider, Grid, Menu, Segment, Icon, Popup , Form, Table, Label } from 'semantic-ui-react';
+import $ from 'jquery'; 
 
 {/* Model class customer */}
 class Customer extends React.Component {
@@ -14,6 +15,7 @@ class Customer extends React.Component {
         this.add = this.add.bind(this);
         this.update = this.update.bind(this);
         this.delete = this.delete.bind(this);
+        this.handleChange = this.handleChange.bind(this);
         
     }
 
@@ -22,17 +24,21 @@ class Customer extends React.Component {
         this.loadData();
     }
 
+
     loadData() {
-        
-        //ajax call logic
-        fetch('/Customers/GetCustomersDetails').then(response => {
-            response.json().then(data => {
-                //console.log(data);
-                this.setState({
-                    serviceList: data
-                })
+        $.ajax({
+            url: '/Customers/GetCustomersDetails',
+            dataType: 'json',
+            type: 'get',
+            contentType: 'application/json',
+            processData: false,
+        }).done((data) => {
+            console.log(data);
+            this.setState({
+                serviceList: data
             })
-        })
+            
+        });
     }
 
 
@@ -66,48 +72,33 @@ class Customer extends React.Component {
        // this.refs.form.reset();
     }
 
+    handleChange(e){
+        this.setState({
+            [e.target.name]: e.target.value
+        })
+    }
+
     update(id) {
         //ajax call logic
-        const formData = new FormData(event.target)
-        let convertID = JSON.stringify(id)
-        let dataJSON = {Id : convertID}
-        event.preventDefault()
-        for (let entry of formData.entries()) {
-            dataJSON[entry[0]] = entry[1]
+        var data= {
+            name: this.state.name,
+            address : this.state.address,
+            id : id
         }
-        alert(JSON.stringify(dataJSON));
-        
-        fetch('/Customers/PostUpdateOneCustomer', {
-            method: 'POST',
-            headers: {
-                Accept: 'application/json',
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(dataJSON)
-        }).then(response => {
-            response.json().then(data => {
-                console.log(data);
-                window.location.reload();
-            })
-        })
 
-        // ANOTHER WAY
-        /*$.ajax({
-            url: "/Customers/PostUpdateOneCustomer",
-            type: "POST",
-            dataType: "JSON",
-            data: JSON.stringify(dataJSON),
-            success: function (response) {   
-                alert('updated')
-                $.each( response, function( index, value ){
-                    console.log(value);
-                })             
-                window.location.reload(); // refresh the page
-            },
-            error: function(jqXHR, textStatus, errorThrown) {
-                alert(textStatus, errorThrown);
-            }
-        })*/
+        $.ajax({
+            url: '/Customers/PostUpdateOneCustomer',
+            dataType: 'json',
+            type: 'post',
+            contentType: 'application/json',
+            data: JSON.stringify(data)
+        }).done((data) => {
+            console.log(data);
+            this.setState({
+                serviceList: data
+            })
+            
+        });
         
     }
 
@@ -147,11 +138,11 @@ class Customer extends React.Component {
                                 <Form ref="form" method="POST" onSubmit={this.update.bind(this,service.Id)}>
                                     <Form.Field>
                                     <label>Name</label><br />
-                                    <input type="text" placeholder="Type a name" name="name" placeholder={service.Name} required /><br />
+                                    <input type="text" placeholder="Type a name" name="name" placeholder={service.Name} onChange={this.handleChange} required /><br />
                                     </Form.Field>
                                     <Form.Field>
                                         <label>Address</label><br />
-                                        <input placeholder="Type an address" name="address" placeholder={service.Address} required /><br />
+                                        <input placeholder="Type an address" name="address" placeholder={service.Address} onChange={this.handleChange} required /><br />
                                     </Form.Field>
                                     <Button type='submit'><Icon name="save" />save</Button>
                                 </Form>

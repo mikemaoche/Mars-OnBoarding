@@ -21,7 +21,7 @@ namespace Mars.Models
         public int ProductId { get; set; }
         public int CustomerId { get; set; }
         public int StoreId { get; set; }
-        public System.DateTime DateSold { get; set; }
+        public DateTime DateSold { get; set; }
         
         [JsonIgnore]
         public virtual Customer Customer { get; set; }

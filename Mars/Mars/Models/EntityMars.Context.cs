@@ -18,10 +18,11 @@ namespace Mars.Models
         public MarsEntities()
             : base("name=MarsEntities")
         {
+            this.Configuration.ProxyCreationEnabled = false; // ERROR : SOLVE THE PROBLEM WITH THE SERIALIZATION
         }
     
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
-        {
+        {            
             throw new UnintentionalCodeFirstException();
         }
     

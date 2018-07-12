@@ -27,9 +27,9 @@ namespace Mars.Controllers
                 var products = db.Products.Select(p => new { p.Id, p.Name }).ToList();
                 var stores = db.Stores.Select(s => new { s.Id, s.Name }).ToList();
                 List<Object> array = new List<Object>(){ customers, products, stores };
-                return Json(array, JsonRequestBehavior.AllowGet);
+                return Json( array, JsonRequestBehavior.AllowGet);
             }                
-            return Json("DATA NOT FOUND", JsonRequestBehavior.DenyGet);
+            return Json(new { Success= false }, JsonRequestBehavior.DenyGet);
         }
 
         /// <summary>
@@ -91,14 +91,11 @@ namespace Mars.Controllers
                 result = db.ProductSolds.Select(col => new
                 {
                     Id = col.Id,
-                    /*CustomerId = col.CustomerId,
-                    ProductId = col.ProductId,
-                    StoreId = col.StoreId,*/
                     Customer = col.Customer,
                     Product = col.Product,
                     Store = col.Store,
                     DateSold = col.DateSold
-                    }).ToList();
+                }).ToList();
                 db.Dispose();
                 return Json( result , JsonRequestBehavior.AllowGet);
             }
@@ -106,5 +103,25 @@ namespace Mars.Controllers
         }
 
 
+        public JsonResult PostUpdateOneSale(ProductSold prodsold)
+        {
+
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    /*var query = db.Customers.Where(user => user.Id == prodsold.Id).Select(col => new { col.Name }).Single();
+                    query = new { customer.Name, customer.Address };
+                    db.Entry(prodsold).State = EntityState.Modified; // allow to update the entity
+                    db.SaveChanges();*/
+                    return Json(new { Success = true }, JsonRequestBehavior.AllowGet);
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e);
+                }
+            }
+            return Json(new { Success = false }, JsonRequestBehavior.DenyGet);
+        }
     }
 }
