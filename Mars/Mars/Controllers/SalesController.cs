@@ -110,10 +110,12 @@ namespace Mars.Controllers
             {
                 try
                 {
+
                     /*var query = db.Customers.Where(user => user.Id == prodsold.Id).Select(col => new { col.Name }).Single();
-                    query = new { customer.Name, customer.Address };
-                    db.Entry(prodsold).State = EntityState.Modified; // allow to update the entity
-                    db.SaveChanges();*/
+              
+                    query = new { customer.Name, customer.Address };*/
+                    //db.Entry(prodsold).State = EntityState.Modified; // allow to update the entity
+                    db.SaveChanges();
                     return Json(new { Success = true }, JsonRequestBehavior.AllowGet);
                 }
                 catch (Exception e)

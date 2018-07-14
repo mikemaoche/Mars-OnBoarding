@@ -22,6 +22,7 @@ class Sales extends React.Component {
         this.handleChange= this.handleChange.bind(this); // dropdown to handle values;
         this.handleDate= this.handleDate.bind(this); // date
         this.handleChangeUpdate = this.handleChangeUpdate.bind(this); // for the update operation
+        this.fillDropdown = this.fillDropdown.bind(this);
     }
 
 
@@ -40,22 +41,25 @@ class Sales extends React.Component {
     loadData() {        
         //ajax call logic
         fetch('/Sales/GetSalesDetails').then(response => { // dropdowns
-            response.json().then(data => {   
+            response.json().then(data => {                  
                 this.setState({ 
-                    serviceList: data 
-                })
+                    serviceList: data,
+                    customersList: data[0],
+                    productsList: data[1],
+                    storesList: data[2],
+                });
             })
         });
-
         
         $.ajax({
             url: '/Sales/GetAllSales',
             dataType: 'json',
             type: 'get',
             contentType: 'application/json'
-        }).done((data) => {
-            console.log(data);
-            this.setState({ saleList: data });
+        }).done((data) => {            
+            this.setState({ 
+                saleList: data,
+            });
         });
     }
     
@@ -109,6 +113,7 @@ class Sales extends React.Component {
             this.setState({
                 serviceList: data
             })            
+
         });
     }
 
@@ -144,6 +149,15 @@ class Sales extends React.Component {
         this.setState({ [e.target.name] : e.target.value });
     }
 
+    // dynamic list to fill up the dropdown 
+    fillDropdown(list){     
+        let result = [];
+        for (var key in list) {
+            result.push({ key: list[key]["Id"] , text: list[key]["Name"], value: list[key]["Name"] })
+        }        
+        return result;
+    }
+
     render() {        
             
         let serviceList = this.state.serviceList;
@@ -154,22 +168,6 @@ class Sales extends React.Component {
 
         if (serviceList != "") {      
             const { name, value, key } = this.state; // set the value which would be selected into the dropdown
-
-            // dropdown customers
-            let options_customers = [];
-            serviceList[0].map((service, i) =>
-                options_customers.push({ key: service.Id , text: service.Name, value: service.Name })) 
-
-            // dropdown products
-            let options_products = [];
-            serviceList[1].map((service, i) =>
-                options_products.push({ key: service.Id , text: service.Name, value: service.Name }))
-
-            // dropdown stores
-            let options_stores = [];
-            serviceList[2].map((service, i) =>
-                options_stores.push({ key: service.Id , text: service.Name, value: service.Name }))
-
                 
             add_sale = <Modal id="modal" trigger={<Button color="blue" id="buttonModal">Add a new sale record</Button>}  >
                                             <Modal.Header >Add a new sale</Modal.Header>
@@ -177,15 +175,15 @@ class Sales extends React.Component {
                                                 <Form onSubmit={this.add.bind(this)} ref="form" method="POST">
                                                     <Form.Field>
                                                         <label>Select customer</label><br />
-                                                        <Dropdown selection options={options_customers} onChange={this.handleChange} name="selectCustomer" placeholder='Select Customer' /><br />
+                                                        <Dropdown selection options={this.fillDropdown(this.state.customersList)} onChange={this.handleChange} name="selectCustomer" placeholder='Select Customer' /><br />
                                                 </Form.Field>
                                                 <Form.Field>
                                                     <label>Product name</label><br />
-                                                    <Dropdown selection options={options_products} onChange={this.handleChange} name="selectProduct" placeholder='Select Product' /><br />
+                                                    <Dropdown selection options={this.fillDropdown(this.state.productsList)} onChange={this.handleChange} name="selectProduct" placeholder='Select Product' /><br />
                                                 </Form.Field>
                                                 <Form.Field>
                                                     <label>Store name</label><br />
-                                                    <Dropdown selection options={options_stores} onChange={this.handleChange} name="selectStore" placeholder='Select Store' /><br />
+                                                    <Dropdown selection options={this.fillDropdown(this.state.storesList)} onChange={this.handleChange} name="selectStore" placeholder='Select Store' /><br />
                                                 </Form.Field>
                                                 <Form.Field>
                                                     <label>Date</label><br />
@@ -210,19 +208,19 @@ class Sales extends React.Component {
                                     <Form ref="form" method="POST" onSubmit={this.update.bind(this,service.Id)}>
                                         <Form.Field>
                                             <label>Customer name</label><br />
-                                            <input type="text" name="name" placeholder={service.Customer.Name} onChange={this.handleChangeUpdate} required /><br />
+                                            <Dropdown selection options={this.fillDropdown(this.state.customersList)} onChange={this.handleChange} placeholder={service.Customer.Name} /><br />                                            
                                         </Form.Field>
                                         <Form.Field>
                                             <label>Product name</label><br />
-                                            <input name="product" placeholder={service.Product.Name} onChange={this.handleChangeUpdate} required /><br />
+                                            <Dropdown selection options={this.fillDropdown(this.state.productsList)} onChange={this.handleChange} placeholder={service.Product.Name} /><br />
                                         </Form.Field>
                                         <Form.Field>
                                             <label>Store name</label><br />
-                                            <input name="store" placeholder={service.Store.Name} onChange={this.handleChangeUpdate}  required /><br />
+                                            <Dropdown selection options={this.fillDropdown(this.state.storesList)} onChange={this.handleChange} placeholder={service.Store.Name} /><br />
                                         </Form.Field>
                                         <Form.Field>
                                             <label>Date sold</label><br />
-                                            <input type="text" name="date" placeholder={moment(service.DateSold).format("DD/MM/YYYY")} onChange={this.handleChangeUpdate} required /><br />
+                                            <input type="date" name="date" value={moment(service.DateSold).format("YYYY-MM-DD")} onChange={this.handleDate} required /><br />
                                         </Form.Field>
                                         <Button type='submit'><Icon name="save" />save</Button>
                                     </Form>
@@ -238,7 +236,7 @@ class Sales extends React.Component {
         return (
             <React.Fragment>
                 <div>  
-                    {console.log(this.state)}
+                    {console.log(this.state.customersList)}
                     {add_sale}                                      
                     <Table celled>
                     <Table.Header>
