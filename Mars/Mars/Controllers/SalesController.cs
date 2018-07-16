@@ -42,7 +42,6 @@ namespace Mars.Controllers
         [HttpPost]
         public ActionResult PostAddOneSale(ProductSold prodsold)
         {
-            Console.WriteLine(Request.Form["date"]);
             if (prodsold != null) // checking the fields are completed
             {
                 // get all ID
@@ -51,6 +50,7 @@ namespace Mars.Controllers
                 var idstore = db.Stores.Where(sto => sto.Id == prodsold.StoreId).Select(col => col.Id).Single();
                 string text_date = Request.Form["date"]; // initial date  
                 DateTime date = Convert.ToDateTime(text_date); // convert to Datetime
+                
 
                 if (idcustomer > 0 && idproduct > 0  && idstore > 0) // check if the ID exist for each table
                 {
@@ -63,7 +63,7 @@ namespace Mars.Controllers
                     db.SaveChanges();
                     return Json("SUCCESS", JsonRequestBehavior.AllowGet);
                 }
-                return Json(Request, JsonRequestBehavior.AllowGet);
+              
             }
             return Json("FAILED", JsonRequestBehavior.DenyGet);
         }
@@ -97,9 +97,9 @@ namespace Mars.Controllers
                     DateSold = col.DateSold
                 }).ToList();
                 db.Dispose();
-                return Json( result , JsonRequestBehavior.AllowGet);
+                return Json(result, JsonRequestBehavior.AllowGet);
             }
-            return Json("DATA NOT FOUND", JsonRequestBehavior.DenyGet);
+            return Json("FAILED", JsonRequestBehavior.DenyGet);
         }
 
 

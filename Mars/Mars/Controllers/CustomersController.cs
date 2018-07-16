@@ -63,10 +63,23 @@ namespace Mars.Controllers
 
         
         public JsonResult DeleteOneCustomer(int customerId)
-        {
-            var customer = db.Customers.Where(user => user.Id == customerId).Single();
-            db.Customers.Remove(customer);
+        {              
+            var delete = from customer in db.Customers
+                           join prodsold in db.ProductSolds on customer.Id equals prodsold.CustomerId
+                           where customer.Id == customerId && prodsold.CustomerId == customerId
+                           select prodsold;
+
+            foreach (var record in delete)
+            {
+                db.ProductSolds.Remove(record);
+            }
+
+            var c = db.Customers.Where(user => user.Id == customerId).Single(); // delete the customer
+            
+            db.Customers.Remove(c);
+
             db.SaveChanges();
+
             return Json(db.Customers.ToList(), JsonRequestBehavior.AllowGet);
         }
 

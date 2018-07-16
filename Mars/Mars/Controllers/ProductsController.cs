@@ -62,8 +62,20 @@ namespace Mars.Controllers
 
         public JsonResult DeleteOneProduct(int productId)
         {
-            var product = db.Products.Where(prod => prod.Id == productId).Single();
-            db.Products.Remove(product);
+            var delete = from product in db.Products
+                         join prodsold in db.ProductSolds on product.Id equals prodsold.ProductId
+                         where product.Id == productId && prodsold.ProductId == productId
+                         select prodsold;
+
+            foreach (var record in delete)
+            {
+                db.ProductSolds.Remove(record);
+            }
+
+
+            var p = db.Products.Where(prod => prod.Id == productId).Single();
+            db.Products.Remove(p);
+
             db.SaveChanges();
             return Json(db.Products.ToList(), JsonRequestBehavior.AllowGet);
         }

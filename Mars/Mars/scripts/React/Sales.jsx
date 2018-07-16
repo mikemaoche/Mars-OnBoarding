@@ -56,7 +56,7 @@ class Sales extends React.Component {
             dataType: 'json',
             type: 'get',
             contentType: 'application/json'
-        }).done((data) => {            
+        }).done((data) => {     
             this.setState({ 
                 saleList: data,
             });
@@ -77,11 +77,13 @@ class Sales extends React.Component {
                 storeID:this.state.selectStore[0].key,
                 date:this.state.selectDate             
             },
-            success: function (response) {                 
-                console.log(response)       
+            success: function (data) {
+                
+                window.location.reload()
+               
             },
-            error: function(jqXHR, textStatus, errorThrown) {
-                console.log(textStatus, errorThrown);
+            error: function(error) {
+                console.log(error);
             }
         }); 
     }
@@ -113,7 +115,6 @@ class Sales extends React.Component {
             this.setState({
                 serviceList: data
             })            
-
         });
     }
 
