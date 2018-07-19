@@ -18,7 +18,6 @@ class Products extends React.Component {
         
     }
 
-
     componentDidMount() {
         this.loadData();
     }
@@ -28,14 +27,12 @@ class Products extends React.Component {
         //ajax call logic
         fetch('/Products/GetProductsDetails').then(response => {
             response.json().then(data => {
-                //console.log(data);
                 this.setState({
                     serviceList: data
                 })
             })
         })
     }
-
 
     add(event) {
         // ajax call logic     
@@ -47,8 +44,6 @@ class Products extends React.Component {
         for (let entry of formData.entries()) {
             dataJSON[entry[0]] = entry[1]
         }
-        
-        console.log(dataJSON)
         
         fetch('/Products/PostAddOneProduct', {
             method: 'POST',
@@ -63,8 +58,6 @@ class Products extends React.Component {
                 window.location.reload();
             })
         })
-
-        // this.refs.form.reset();
     }
 
     
@@ -105,9 +98,7 @@ class Products extends React.Component {
             type: "POST",
             dataType: "JSON",
             success: function (response) {                 
-                //console.log(response)
                 window.location.reload(); // refresh the page
-
             },
             error: function(jqXHR, textStatus, errorThrown) {
                 console.log(textStatus, errorThrown);
@@ -119,7 +110,6 @@ class Products extends React.Component {
 
     render() {        
         let serviceList = this.state.serviceList;
-
         let tableData = null;
 
         if (serviceList != "") {

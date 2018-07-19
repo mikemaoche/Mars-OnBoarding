@@ -19,11 +19,11 @@ textarea {
 #modal{
    background:rgba(0, 148, 255,1);
    width:50%;
-   height:90%;
    top:20%;
    right:20%;
    left:20%;
    bottom:20%;
+   display:flex;
    
 }
 

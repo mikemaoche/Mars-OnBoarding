@@ -23,18 +23,15 @@ class Stores extends React.Component {
     }
 
     loadData() {
-        
         //ajax call logic
         fetch('/Stores/GetStoresDetails').then(response => {
             response.json().then(data => {
-                //console.log(data);
                 this.setState({
                     serviceList: data
                 })
             })
         })
     }
-
 
     add(event) {
         // ajax call logic     
@@ -62,11 +59,8 @@ class Stores extends React.Component {
                 window.location.reload();
             })
         })
-
-        // this.refs.form.reset();
     }
-
-        
+   
     handleChange(e){
         this.setState({
             [e.target.name]: e.target.value
@@ -104,9 +98,7 @@ class Stores extends React.Component {
             type: "POST",
             dataType: "JSON",
             success: function (response) {                 
-                //console.log(response)
                 window.location.reload(); // refresh the page
-
             },
             error: function(jqXHR, textStatus, errorThrown) {
                 console.log(textStatus, errorThrown);
@@ -133,7 +125,7 @@ class Stores extends React.Component {
                                 <Form ref="form" method="POST" onSubmit={this.update.bind(this,service.Id)}>
                                     <Form.Field>
                                     <label>Name</label><br />
-                                    <input type="text" name="name" placeholder={service.Name} onChange={this.handleChange} required /><br />
+                                    <input type="text" name="name" placeholder={service.Name} onChange={this.handleChange} required minlength="3" maxlength="20" /><br />
                                     </Form.Field>
                                     <Form.Field>
                                         <label>Address</label><br />
@@ -159,7 +151,7 @@ class Stores extends React.Component {
                                                 <Form onSubmit={this.add} ref="form" method="POST">
                                                     <Form.Field>
                                                         <label>Name</label><br />
-                                                        <input type="text" placeholder="Type a name for the store" name="name" required /><br />  
+                                                        <input type="text" placeholder="Type a name for the store" name="name" required minlength="3" maxlength="20" /><br />  
                                                     </Form.Field>   
                                                     <Form.Field>                         
                                                         <label>Address</label><br />

@@ -88,7 +88,7 @@ class Sales extends React.Component {
         }); 
     }
 
-    handleChangeUpdate(e){
+    handleChangeUpdate  (e){
         this.setState({
             [e.target.name]: e.target.value
         })
@@ -96,11 +96,13 @@ class Sales extends React.Component {
 
     update(id) {
         //ajax call logic
-        var data= {
-            name: this.state.name,
-            product : this.state.product,
-            store : this.state.store,
-            date : this.state.date,
+        let convert = moment(this.state.newDate).format("DD-MM-YYYY") // by default was MM-DD-YYYY
+        
+        let data= {
+            customerID: this.state.selectCustomer[0].key,
+            productID: this.state.selectProduct[0].key,
+            storeID:this.state.selectStore[0].key,
+            dateSold: convert,            
             id : id
         }
 
@@ -125,7 +127,6 @@ class Sales extends React.Component {
             type: "POST",
             dataType: "JSON",
             success: function (response) {                 
-                alert(response)
                 window.location.reload()
             },
             error: function(error) {
@@ -195,6 +196,7 @@ class Sales extends React.Component {
                                         </Modal.Content>
                                     </Modal>
         }
+        // the table display all sale records
         if (saleList != "") {
             tableData = saleList.map(service => 
                 <Table.Row key={service.Id}>
@@ -209,19 +211,19 @@ class Sales extends React.Component {
                                     <Form ref="form" method="POST" onSubmit={this.update.bind(this,service.Id)}>
                                         <Form.Field>
                                             <label>Customer name</label><br />
-                                            <Dropdown selection options={this.fillDropdown(this.state.customersList)} onChange={this.handleChange} placeholder={service.Customer.Name} /><br />                                            
+                                            <Dropdown selection options={this.fillDropdown(this.state.customersList)} onChange={this.handleChange} name="selectCustomer" placeholder={service.Customer.Name} /><br />                                            
                                         </Form.Field>
                                         <Form.Field>
                                             <label>Product name</label><br />
-                                            <Dropdown selection options={this.fillDropdown(this.state.productsList)} onChange={this.handleChange} placeholder={service.Product.Name} /><br />
+                                            <Dropdown selection options={this.fillDropdown(this.state.productsList)} onChange={this.handleChange} name="selectProduct" placeholder={service.Product.Name} /><br />
                                         </Form.Field>
                                         <Form.Field>
                                             <label>Store name</label><br />
-                                            <Dropdown selection options={this.fillDropdown(this.state.storesList)} onChange={this.handleChange} placeholder={service.Store.Name} /><br />
+                                            <Dropdown selection options={this.fillDropdown(this.state.storesList)} onChange={this.handleChange} name="selectStore" placeholder={service.Store.Name} /><br />
                                         </Form.Field>
                                         <Form.Field>
                                             <label>Date sold</label><br />
-                                            <input type="date" name="date" value={moment(service.DateSold).format("YYYY-MM-DD")} onChange={this.handleDate} required /><br />
+                                            <input type="date" name="newDate" onChange={this.handleDate} required /><br />
                                         </Form.Field>
                                         <Button type='submit'><Icon name="save" />save</Button>
                                     </Form>
@@ -236,8 +238,7 @@ class Sales extends React.Component {
     }
         return (
             <React.Fragment>
-                <div>  
-                    {console.log(this.state.customersList)}
+                <div>                     
                     {add_sale}                                      
                     <Table celled>
                     <Table.Header>

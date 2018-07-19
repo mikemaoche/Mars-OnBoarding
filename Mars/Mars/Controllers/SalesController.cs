@@ -2,6 +2,7 @@
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -108,22 +109,28 @@ namespace Mars.Controllers
 
             if (ModelState.IsValid)
             {
-                try
+                try 
                 {
+                    var query = db.ProductSolds.Where(user => user.Id == prodsold.Id).Select(col => new { col.CustomerId, col.ProductId, col.StoreId, col.DateSold }).Single();
+                    string text_date = Request.Form["date"]; // initial date
+                    DateTime date = Convert.ToDateTime(text_date); // convert to Datetime
 
-                    /*var query = db.Customers.Where(user => user.Id == prodsold.Id).Select(col => new { col.Name }).Single();
-              
-                    query = new { customer.Name, customer.Address };*/
-                    //db.Entry(prodsold).State = EntityState.Modified; // allow to update the entity
+                    query = new {
+                        CustomerId = prodsold.CustomerId,
+                        ProductId = prodsold.ProductId,
+                        StoreId = prodsold.StoreId,
+                        DateSold = date
+                    };
+                    db.Entry(prodsold).State = EntityState.Modified; // allow to update the entity
                     db.SaveChanges();
                     return Json(new { Success = true }, JsonRequestBehavior.AllowGet);
                 }
                 catch (Exception e)
                 {
-                    Console.WriteLine(e);
+                    return Json(new { Success = false, e }, JsonRequestBehavior.DenyGet);
                 }
             }
             return Json(new { Success = false }, JsonRequestBehavior.DenyGet);
-        }
+            }
     }
 }

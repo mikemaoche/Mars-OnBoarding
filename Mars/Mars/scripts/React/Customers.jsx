@@ -19,11 +19,9 @@ class Customer extends React.Component {
         
     }
 
-
     componentDidMount() {
         this.loadData();
     }
-
 
     loadData() {
         $.ajax({
@@ -40,7 +38,6 @@ class Customer extends React.Component {
             
         });
     }
-
 
     add(event) {
         // ajax call logic     
@@ -68,8 +65,6 @@ class Customer extends React.Component {
                 window.location.reload();
             })
         })
-
-       // this.refs.form.reset();
     }
 
     handleChange(e){
@@ -108,10 +103,8 @@ class Customer extends React.Component {
             url: "/Customers/DeleteOneCustomer?customerId=" + id,
             type: "POST",
             dataType: "JSON",
-            success: function (response) {                 
-                //console.log(response)
+            success: function (response) {
                 window.location.reload(); // refresh the page
-
             },
             error: function(jqXHR, textStatus, errorThrown) {
                 console.log(textStatus, errorThrown);
@@ -119,11 +112,8 @@ class Customer extends React.Component {
         });
     }
 
-
-
     render() {        
         let serviceList = this.state.serviceList;
-
         let tableData = null;
 
         if (serviceList != "") {
@@ -138,7 +128,8 @@ class Customer extends React.Component {
                                 <Form ref="form" method="POST" onSubmit={this.update.bind(this,service.Id)}>
                                     <Form.Field>
                                     <label>Name</label><br />
-                                    <input type="text" placeholder="Type a name" name="name" placeholder={service.Name} onChange={this.handleChange} required /><br />
+                                    <input type="text" placeholder="Type a name" name="name" placeholder={service.Name} 
+                                            onChange={this.handleChange} required minlength="3" maxlength="20" /><br />
                                     </Form.Field>
                                     <Form.Field>
                                         <label>Address</label><br />
@@ -164,7 +155,8 @@ class Customer extends React.Component {
                         <Form onSubmit={this.add} ref="form" method="POST">
                             <Form.Field>
                                 <label>Name</label><br />
-                                <input type="text" placeholder="Type a name" name="name" required /><br />  
+                                <input type="text" placeholder="Type a name" name="name" required 
+                                        minlength="3" maxlength="20" /><br />  
                             </Form.Field>   
                             <Form.Field>                         
                                 <label>Address</label><br />

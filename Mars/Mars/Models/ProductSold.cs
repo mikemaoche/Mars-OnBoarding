@@ -29,5 +29,6 @@ namespace Mars.Models
         public virtual Product Product { get; set; }
         [JsonIgnore]
         public virtual Store Store { get; set; }
+
     }
 }
