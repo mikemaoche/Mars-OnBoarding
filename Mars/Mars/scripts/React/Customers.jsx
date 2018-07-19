@@ -23,19 +23,21 @@ class Customer extends React.Component {
         this.loadData();
     }
 
-    loadData() {
+    loadData() {        
         $.ajax({
             url: '/Customers/GetCustomersDetails',
             dataType: 'json',
             type: 'get',
             contentType: 'application/json',
             processData: false,
+            beforeSend: function(){ // loading...
+                $('#loading').show();
+            }
         }).done((data) => {
-            console.log(data);
+            $('#loading').hide();
             this.setState({
                 serviceList: data
-            })
-            
+            })            
         });
     }
 
@@ -148,7 +150,8 @@ class Customer extends React.Component {
         }
     return (
         <React.Fragment>
-            <div>
+            <div>           
+                     
                 <Modal id="modal" trigger={<Button color="blue" id="buttonModal">Add a new customer</Button>}  >
                     <Modal.Header >Add a new customer</Modal.Header>
                     <Modal.Content>
@@ -166,6 +169,7 @@ class Customer extends React.Component {
                         </Form>
                     </Modal.Content>
                 </Modal>
+                
                       <Table celled>
                         <Table.Header>
                           <Table.Row>
@@ -180,8 +184,9 @@ class Customer extends React.Component {
                         </Table.Body>
                         <Table.Footer>
                         </Table.Footer>
-                      </Table>
-                    </div>
+                      </Table>                                                                 
+                    </div>                      
+                    <div id="loading"><img id="loading-image" src="/images/ajax-loader.gif" /></div>                   
                </React.Fragment>      
             )
     }

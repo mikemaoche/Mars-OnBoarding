@@ -55,8 +55,12 @@ class Sales extends React.Component {
             url: '/Sales/GetAllSales',
             dataType: 'json',
             type: 'get',
-            contentType: 'application/json'
-        }).done((data) => {     
+            contentType: 'application/json',
+            beforeSend: function(){ // loading...
+                $('#loading').show();
+            }
+        }).done((data) => {  
+            $('#loading').hide();
             this.setState({ 
                 saleList: data,
             });
@@ -258,6 +262,7 @@ class Sales extends React.Component {
                     </Table.Footer>
                     </Table>
                 </div>
+                <div id="loading"><img id="loading-image" src="/images/ajax-loader.gif" /></div>
             </React.Fragment>      
                 )
             }

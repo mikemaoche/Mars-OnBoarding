@@ -1,6 +1,7 @@
 ﻿import React from 'react';
 import ReactDOM from 'react-dom';
 import { Button, Modal, Header, Image, Container, Divider, Grid, Menu, Segment, Icon, Popup , Form, Table, Label } from 'semantic-ui-react';
+import $ from 'jquery'; 
 
 {/* Model class product */}
 class Products extends React.Component {
@@ -22,16 +23,23 @@ class Products extends React.Component {
         this.loadData();
     }
 
-    loadData() {
-        
+    loadData() {        
         //ajax call logic
-        fetch('/Products/GetProductsDetails').then(response => {
-            response.json().then(data => {
-                this.setState({
-                    serviceList: data
-                })
-            })
-        })
+        $.ajax({
+            url: '/Products/GetProductsDetails',
+            dataType: 'json',
+            type: 'get',
+            contentType: 'application/json',
+            processData: false,
+            beforeSend: function(){ // loading...
+                $('#loading').show();
+            }
+        }).done((data) => {
+            $('#loading').hide();
+            this.setState({
+                serviceList: data
+            })            
+        });   
     }
 
     add(event) {
@@ -116,7 +124,7 @@ class Products extends React.Component {
             tableData = serviceList.map(service => 
                 <Table.Row key={service.Id}>
                     <Table.Cell >{service.Name}</Table.Cell>
-                    <Table.Cell >{service.Price}</Table.Cell>
+                    <Table.Cell >{"$ " + service.Price}</Table.Cell>
                     <Table.Cell >
                       <Modal id="modal" trigger={<Button color="yellow"><Icon name="edit" />Edit</Button>}  >
                         <Modal.Header >Details product</Modal.Header>
@@ -140,44 +148,45 @@ class Products extends React.Component {
                     </Table.Cell>
                 </Table.Row>
            )
-                        }
-                            return (
-                                <React.Fragment>
-                                    <div>
-                                        <Modal id="modal" trigger={<Button color="blue" id="buttonModal">Add a new price</Button>}  >
-                                            <Modal.Header >Add a new product</Modal.Header>
-                                            <Modal.Content>
-                                                <Form onSubmit={this.add} ref="form" method="POST">
-                                                    <Form.Field>
-                                                        <label>Name</label><br />
-                                                        <input type="text" placeholder="Type a name for the product" name="name" required /><br />  
-                                                    </Form.Field>   
-                                                    <Form.Field>                         
-                                                        <label>Price</label><br />
-                                                        <input placeholder="Type an price" name="price" /><br />
-                                                    </Form.Field>
-                                                    <Button type='submit'><Icon name="save" required />save</Button>         
-                                                </Form>
-                                            </Modal.Content>
-                                        </Modal>
-                                              <Table celled>
-                                                <Table.Header>
-                                                  <Table.Row>
-                                                    <Table.HeaderCell>Product name</Table.HeaderCell>
-                                                    <Table.HeaderCell>Price</Table.HeaderCell>
-                                                    <Table.HeaderCell>Action (Edit)</Table.HeaderCell>
-                                                    <Table.HeaderCell>Action (Delete)</Table.HeaderCell>
-                                                  </Table.Row>
-                                                </Table.Header>
-                                                <Table.Body>
-                                                    {tableData}
-                                                </Table.Body>
-                                                <Table.Footer>
-                                                </Table.Footer>
-                                              </Table>
-                                            </div>
-                                       </React.Fragment>      
-                                    )
+                }
+                    return (
+                        <React.Fragment>
+                            <div>
+                                <Modal id="modal" trigger={<Button color="blue" id="buttonModal">Add a new price</Button>}  >
+                                    <Modal.Header >Add a new product</Modal.Header>
+                                    <Modal.Content>
+                                        <Form onSubmit={this.add} ref="form" method="POST">
+                                            <Form.Field>
+                                                <label>Name</label><br />
+                                                <input type="text" placeholder="Type a name for the product" name="name" required /><br />  
+                                            </Form.Field>   
+                                            <Form.Field>                         
+                                                <label>Price</label><br />
+                                                <input placeholder="Type an price" name="price" /><br />
+                                            </Form.Field>
+                                            <Button type='submit'><Icon name="save" required />save</Button>         
+                                        </Form>
+                                    </Modal.Content>
+                                </Modal>
+                                        <Table celled>
+                                        <Table.Header>
+                                            <Table.Row>
+                                            <Table.HeaderCell>Product name</Table.HeaderCell>
+                                            <Table.HeaderCell>Price</Table.HeaderCell>
+                                            <Table.HeaderCell>Action (Edit)</Table.HeaderCell>
+                                            <Table.HeaderCell>Action (Delete)</Table.HeaderCell>
+                                            </Table.Row>
+                                        </Table.Header>
+                                        <Table.Body>
+                                            {tableData}
+                                        </Table.Body>
+                                        <Table.Footer>
+                                        </Table.Footer>
+                                        </Table>
+                                    </div>
+                                    <div id="loading"><img id="loading-image" src="/images/ajax-loader.gif" /></div>
+                                </React.Fragment>      
+                        )
     }
 }
 

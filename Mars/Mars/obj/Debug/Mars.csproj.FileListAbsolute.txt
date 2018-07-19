@@ -111,3 +111,8 @@ C:\Users\worker session\Source\Repos\OnBoardingOfficial\Mars\Mars\bin\Microsoft.
 C:\Users\worker session\Source\Repos\OnBoardingOfficial\Mars\Mars\bin\Microsoft.Owin.Security.xml
 C:\Users\worker session\Source\Repos\OnBoardingOfficial\Mars\Mars\bin\Newtonsoft.Json.xml
 C:\Users\worker session\Source\Repos\OnBoardingOfficial\Mars\Mars\obj\Debug\Mars.csprojResolveAssemblyReference.cache
+C:\Users\worker session\Source\Repos\OnBoardingOfficial\Mars\Mars\bin\Antlr3.Runtime.dll
+C:\Users\worker session\Source\Repos\OnBoardingOfficial\Mars\Mars\bin\System.Web.Optimization.dll
+C:\Users\worker session\Source\Repos\OnBoardingOfficial\Mars\Mars\bin\WebGrease.dll
+C:\Users\worker session\Source\Repos\OnBoardingOfficial\Mars\Mars\bin\Antlr3.Runtime.pdb
+C:\Users\worker session\Source\Repos\OnBoardingOfficial\Mars\Mars\bin\System.Web.Optimization.xml

@@ -43,3 +43,9 @@ textarea {
     from {background-color: floralwhite;  }
     to {background-color: lavenderblush;  }
 }
+
+#loading{
+    display: none;
+    margin-top:1em;
+    text-align:center;
+}
