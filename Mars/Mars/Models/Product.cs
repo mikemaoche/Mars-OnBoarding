@@ -26,6 +26,8 @@ namespace Mars.Models
 
         [Required(ErrorMessage = "This is required name for the product")]
         public string Name { get; set; }
+
+        [Required]
         public decimal Price { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

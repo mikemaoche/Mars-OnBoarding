@@ -1,7 +1,8 @@
-﻿import React from 'react';
+﻿import React, {Component} from 'react';
 import ReactDOM from 'react-dom';
 import { Button, Modal, Header, Image, Container, Divider, Grid, Menu, Segment, Icon, Popup , Form, Table, Label } from 'semantic-ui-react';
 import $ from 'jquery'; 
+import {NotificationContainer} from 'react-notifications';
 
 {/* Model class customer */}
 class Customer extends React.Component {
@@ -106,6 +107,7 @@ class Customer extends React.Component {
             type: "POST",
             dataType: "JSON",
             success: function (response) {
+                NotificationManager.success('Success message', 'Title here');
                 window.location.reload(); // refresh the page
             },
             error: function(jqXHR, textStatus, errorThrown) {

@@ -19,11 +19,11 @@ textarea {
 #modal{
    background:rgba(0, 148, 255,1);
    width:50%;
-   height:40%;
    top:20%;
    right:20%;
    left:20%;
    bottom:20%;
+   display:flex;
    
 }
 
@@ -42,4 +42,10 @@ textarea {
 @keyframes colorful {
     from {background-color: floralwhite;  }
     to {background-color: lavenderblush;  }
+}
+
+#loading{
+    display: none;
+    margin-top:1em;
+    text-align:center;
 }

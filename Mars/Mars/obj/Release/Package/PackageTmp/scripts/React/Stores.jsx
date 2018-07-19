@@ -1,6 +1,7 @@
 ﻿import React from 'react';
 import ReactDOM from 'react-dom';
 import { Button, Modal, Header, Image, Container, Divider, Grid, Menu, Segment, Icon, Popup , Form, Table, Label } from 'semantic-ui-react';
+import $ from 'jquery'; 
 
 {/* Model class store */}
 class Stores extends React.Component {
@@ -23,18 +24,23 @@ class Stores extends React.Component {
     }
 
     loadData() {
-        
         //ajax call logic
-        fetch('/Stores/GetStoresDetails').then(response => {
-            response.json().then(data => {
-                //console.log(data);
-                this.setState({
-                    serviceList: data
-                })
-            })
-        })
+        $.ajax({
+            url: '/Stores/GetStoresDetails',
+            dataType: 'json',
+            type: 'get',
+            contentType: 'application/json',
+            processData: false,
+            beforeSend: function(){ // loading...
+                $('#loading').show();
+            }
+        }).done((data) => {
+            $('#loading').hide();
+            this.setState({
+                serviceList: data
+            })            
+        });        
     }
-
 
     add(event) {
         // ajax call logic     
@@ -62,11 +68,8 @@ class Stores extends React.Component {
                 window.location.reload();
             })
         })
-
-        // this.refs.form.reset();
     }
-
-        
+   
     handleChange(e){
         this.setState({
             [e.target.name]: e.target.value
@@ -104,9 +107,7 @@ class Stores extends React.Component {
             type: "POST",
             dataType: "JSON",
             success: function (response) {                 
-                //console.log(response)
                 window.location.reload(); // refresh the page
-
             },
             error: function(jqXHR, textStatus, errorThrown) {
                 console.log(textStatus, errorThrown);
@@ -133,7 +134,7 @@ class Stores extends React.Component {
                                 <Form ref="form" method="POST" onSubmit={this.update.bind(this,service.Id)}>
                                     <Form.Field>
                                     <label>Name</label><br />
-                                    <input type="text" name="name" placeholder={service.Name} onChange={this.handleChange} required /><br />
+                                    <input type="text" name="name" placeholder={service.Name} onChange={this.handleChange} required minlength="3" maxlength="20" /><br />
                                     </Form.Field>
                                     <Form.Field>
                                         <label>Address</label><br />
@@ -149,44 +150,45 @@ class Stores extends React.Component {
                     </Table.Cell>
                 </Table.Row>
            )
-                        }
-                            return (
-                                <React.Fragment>
-                                    <div>
-                                        <Modal id="modal" trigger={<Button color="blue" id="buttonModal">Add a new store</Button>}  >
-                                            <Modal.Header >Add a new store</Modal.Header>
-                                            <Modal.Content>
-                                                <Form onSubmit={this.add} ref="form" method="POST">
-                                                    <Form.Field>
-                                                        <label>Name</label><br />
-                                                        <input type="text" placeholder="Type a name for the store" name="name" required /><br />  
-                                                    </Form.Field>   
-                                                    <Form.Field>                         
-                                                        <label>Address</label><br />
-                                                        <input placeholder="Type an address" name="address" /><br />
-                                                    </Form.Field>
-                                                    <Button type='submit'><Icon name="save" required />save</Button>         
-                                                </Form>
-                                            </Modal.Content>
-                                        </Modal>
-                                              <Table celled>
-                                                <Table.Header>
-                                                  <Table.Row>
-                                                    <Table.HeaderCell>Store name</Table.HeaderCell>
-                                                    <Table.HeaderCell>Address</Table.HeaderCell>
-                                                    <Table.HeaderCell>Action (Edit)</Table.HeaderCell>
-                                                    <Table.HeaderCell>Action (Delete)</Table.HeaderCell>
-                                                  </Table.Row>
-                                                </Table.Header>
-                                                <Table.Body>
-                                                    {tableData}
-                                                </Table.Body>
-                                                <Table.Footer>
-                                                </Table.Footer>
-                                              </Table>
-                                            </div>
-                                       </React.Fragment>      
-                                    )
+        }
+            return (
+                <React.Fragment>
+                    <div>
+                        <Modal id="modal" trigger={<Button color="blue" id="buttonModal">Add a new store</Button>}  >
+                            <Modal.Header >Add a new store</Modal.Header>
+                            <Modal.Content>
+                                <Form onSubmit={this.add} ref="form" method="POST">
+                                    <Form.Field>
+                                        <label>Name</label><br />
+                                        <input type="text" placeholder="Type a name for the store" name="name" required minlength="3" maxlength="20" /><br />  
+                                    </Form.Field>   
+                                    <Form.Field>                         
+                                        <label>Address</label><br />
+                                        <input placeholder="Type an address" name="address" /><br />
+                                    </Form.Field>
+                                    <Button type='submit'><Icon name="save" required />save</Button>         
+                                </Form>
+                            </Modal.Content>
+                        </Modal>
+                                <Table celled>
+                                <Table.Header>
+                                    <Table.Row>
+                                    <Table.HeaderCell>Store name</Table.HeaderCell>
+                                    <Table.HeaderCell>Address</Table.HeaderCell>
+                                    <Table.HeaderCell>Action (Edit)</Table.HeaderCell>
+                                    <Table.HeaderCell>Action (Delete)</Table.HeaderCell>
+                                    </Table.Row>
+                                </Table.Header>
+                                <Table.Body>
+                                    {tableData}
+                                </Table.Body>
+                                <Table.Footer>
+                                </Table.Footer>
+                                </Table>
+                            </div>
+                            <div id="loading"><img id="loading-image" src="/images/ajax-loader.gif" /></div>
+                        </React.Fragment>      
+                    )
     }
 }
 
@@ -196,4 +198,4 @@ class Stores extends React.Component {
 
 {/* rendering the component */}
 const app = document.getElementById('stores');
-ReactDOM.render(<div><h1 class="anim">Stores Details</h1><Stores /></div>,app);
+ReactDOM.render(<div><h1 className="anim">Stores Details</h1><Stores /></div>,app);

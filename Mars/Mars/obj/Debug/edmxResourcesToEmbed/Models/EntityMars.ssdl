@@ -4,7 +4,7 @@
     <Key>
       <PropertyRef Name="Id" />
     </Key>
-    <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
     <Property Name="Address" Type="nvarchar" MaxLength="50" Nullable="false" />
   </EntityType>
@@ -34,30 +34,6 @@
     <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
     <Property Name="Address" Type="nvarchar" MaxLength="50" Nullable="false" />
   </EntityType>
-  <Association Name="FK__ProductSo__Produ__5D95E53A">
-    <End Role="Product" Type="Self.Product" Multiplicity="1" />
-    <End Role="ProductSold" Type="Self.ProductSold" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Product">
-        <PropertyRef Name="Id" />
-      </Principal>
-      <Dependent Role="ProductSold">
-        <PropertyRef Name="ProductId" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK__ProductSo__Produ__5E8A0973">
-    <End Role="Product" Type="Self.Product" Multiplicity="1" />
-    <End Role="ProductSold" Type="Self.ProductSold" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Product">
-        <PropertyRef Name="Id" />
-      </Principal>
-      <Dependent Role="ProductSold">
-        <PropertyRef Name="ProductId" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
   <Association Name="FK_ProductSold_Customer">
     <End Role="Customer" Type="Self.Customer" Multiplicity="1" />
     <End Role="ProductSold" Type="Self.ProductSold" Multiplicity="*" />
@@ -99,14 +75,6 @@
     <EntitySet Name="Product" EntityType="Self.Product" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="ProductSold" EntityType="Self.ProductSold" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Store" EntityType="Self.Store" Schema="dbo" store:Type="Tables" />
-    <AssociationSet Name="FK__ProductSo__Produ__5D95E53A" Association="Self.FK__ProductSo__Produ__5D95E53A">
-      <End Role="Product" EntitySet="Product" />
-      <End Role="ProductSold" EntitySet="ProductSold" />
-    </AssociationSet>
-    <AssociationSet Name="FK__ProductSo__Produ__5E8A0973" Association="Self.FK__ProductSo__Produ__5E8A0973">
-      <End Role="Product" EntitySet="Product" />
-      <End Role="ProductSold" EntitySet="ProductSold" />
-    </AssociationSet>
     <AssociationSet Name="FK_ProductSold_Customer" Association="Self.FK_ProductSold_Customer">
       <End Role="Customer" EntitySet="Customer" />
       <End Role="ProductSold" EntitySet="ProductSold" />

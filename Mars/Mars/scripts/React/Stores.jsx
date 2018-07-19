@@ -85,7 +85,7 @@ class Stores extends React.Component {
         }
 
         $.ajax({
-            url: '/Products/PostUpdateOneProduct',
+            url: '/Stores/PostUpdateOneStore',
             dataType: 'json',
             type: 'post',
             contentType: 'application/json',

@@ -21,6 +21,7 @@ class Products extends React.Component {
 
     componentDidMount() {
         this.loadData();
+        
     }
 
     loadData() {        
@@ -52,12 +53,12 @@ class Products extends React.Component {
         for (let entry of formData.entries()) {
             dataJSON[entry[0]] = entry[1]
         }
-        
+        console.log(dataJSON);
         fetch('/Products/PostAddOneProduct', {
             method: 'POST',
             headers: {
                 Accept: 'application/json',
-                'Content-Type': 'application/json',
+                'Content-Type': 'application/json,charset=utf-8',
             },
             body: JSON.stringify(dataJSON)
         }).then(response => {
@@ -70,14 +71,24 @@ class Products extends React.Component {
 
     
     handleChange(e){
-        this.setState({
-            [e.target.name]: e.target.value
-        })
+        let convert = ""
+        if(e.target.name == "price")
+        {
+            convert =  parseFloat(e.target.value).toFixed(1) // convert to decimal
+            this.setState({
+                [e.target.name]: convert
+            })
+        }else {
+            this.setState({
+                    [e.target.name]: e.target.value
+            })
+        }
     }
 
     update(id) {
+        console.log(this.state.price);
         //ajax call logic
-        var data= {
+        let data= {
             name: this.state.name,
             price : this.state.price,
             id : id
@@ -87,7 +98,7 @@ class Products extends React.Component {
             url: '/Products/PostUpdateOneProduct',
             dataType: 'json',
             type: 'post',
-            contentType: 'application/json',
+            contentType: 'application/json,charset=utf-8',
             data: JSON.stringify(data)
         }).done((data) => {
             console.log(data);
@@ -124,7 +135,7 @@ class Products extends React.Component {
             tableData = serviceList.map(service => 
                 <Table.Row key={service.Id}>
                     <Table.Cell >{service.Name}</Table.Cell>
-                    <Table.Cell >{"$ " + service.Price}</Table.Cell>
+                    <Table.Cell >{"$ " +  parseFloat(service.Price).toFixed(2)}</Table.Cell>
                     <Table.Cell >
                       <Modal id="modal" trigger={<Button color="yellow"><Icon name="edit" />Edit</Button>}  >
                         <Modal.Header >Details product</Modal.Header>
@@ -136,7 +147,7 @@ class Products extends React.Component {
                                     </Form.Field>
                                     <Form.Field>
                                         <label>Price</label><br />
-                                        <input name="price" placeholder={service.Price} onChange={this.handleChange} required /><br />
+                                        <input type="number" step="0.1" name="price" min="0" placeholder={service.Price} onChange={this.handleChange} required /><br />
                                     </Form.Field>
                                     <Button type='submit'><Icon name="save" />save</Button>
                                 </Form>
@@ -162,7 +173,7 @@ class Products extends React.Component {
                                             </Form.Field>   
                                             <Form.Field>                         
                                                 <label>Price</label><br />
-                                                <input placeholder="Type an price" name="price" /><br />
+                                                <input type="number" step="0.1" min="0" placeholder="Type an price" name="price" /><br />
                                             </Form.Field>
                                             <Button type='submit'><Icon name="save" required />save</Button>         
                                         </Form>
