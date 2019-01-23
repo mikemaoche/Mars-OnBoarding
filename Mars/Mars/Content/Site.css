@@ -24,7 +24,7 @@ textarea {
    left:20%;
    bottom:20%;
    display:flex;
-   
+   position: relative;
 }
 
 .anim {
